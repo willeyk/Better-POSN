@@ -1,0 +1,87 @@
+<!---960036477119-0mrmi7l6tp8n71oe48uugfm6310haqjr.apps.googleusercontent.com
+
+meRCb9wlKVWAz8uB03roqGiO----> 
+
+<!---work on google sign in button, home link, sign in link, sign out link, database ---> 
+
+<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+<link rel="stylesheet" href="login.css">
+
+<script src = 'https://code.jquery.com/jquery-3.2.1.min.js'></script>
+<script src =  'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
+<script src="login.js"></script>
+<html>
+
+	<head>
+
+	<body>
+
+<ul>
+	<li><a href = "http://personalonlinesocialnetwork.com "class="active" href="#posn">About POSN</a></li>
+	<li><a href = "file://localhost/Users/kristianwilley/Desktop/login.html#" class="active" href="#home">Home</a></li>
+    <li><a href="#" onclick="signOut();">Sign out</a></li>
+
+
+</ul>
+
+</body>
+
+<body>
+	<link href='https://fonts.googleapis.com/css?family=Mako' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+	</head>
+<html lang="en">
+  <head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="834692356537-5fn43u118ogta150l995623a7auu52fg.apps.googleusercontent.com.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+
+  </body>
+</html>
+
+<body>
+<center><h1>Personal Online Social Network</h1></center>
+  <div class="imgcontainer">
+    <center><img src="ic_launcher.png" alt="Avatar" class="avatar"></center>
+  </div>
+  
+				
+<br>				
+<form class= "register">
+<div class="register">
+<div class="boxed">
+	<input type = "text" placeholder="name" name="usersname"/><br>
+	<input type = "text" placeholder="password" name ="psword"/><br>
+	<input type = "text" placeholder="email address" name="email"/>
+	<center><input type = "button" onlick = "check(this.form)" value = "Create Account" /></center>
+    <p class="message"> Already Registered?<a href = "#"> Login</a></p></div></div></form>
+
+<br> 
+	<form class= "login"> 
+	<div class = "login">
+	<div class= "boxed">
+	<center><input type="text" placeholder ="username" name="userid"/></center><br>
+	<center><input type="password" placeholder ="password" name ="psword"/> </center><br>
+	<center><input type="button" onclick="check(this.form)" value="Login"/>
+	<center><input type="button" id="loginGoogle" value="Google Sign-In"/> 
+
+	<input type="reset" value="Forgot Password?" a href = "#"/></center>
+	<p class="message"> Not Registered? <a href = "#"> Create Account </a></p></div></div></form>
+				
+
+
+<script>
+	$('.message a').click(function(){
+	$('.register').animate({height: "toggle", opacity:"toggle"}, "slow"); 
+	}); 			
+</script>			  
+</body> 
+		
+
+		</html>
+
+
