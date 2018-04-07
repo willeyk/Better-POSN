@@ -1,1 +1,13 @@
+/* 	The '#' indicates an ID and a '.' indicates a class. 
+	IDs are meant to distinquish one element of html, 
+	while class indicates a subset of elements.
+	Notices how it says #myDiv, it means the ID that matches "myDiv"
+*/
 
+#myDiv{
+    background-color: #333;
+    width: 160px;
+    height: 90px;
+    position:absolute;
+	cursor: pointer;
+}
