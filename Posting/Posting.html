@@ -1,1 +1,281 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://socialyte.codeplus.it/personal-profile.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Personal Profile Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./Personal Profile Template_files/bootstrap.min.css" type="text/css">
+    <script src="./Personal Profile Template_files/jquery-3.2.0.min.js.download"></script>
+    <script src="./Personal Profile Template_files/bootstrap.min.js.download"></script>
+    <link rel="stylesheet" href="./Personal Profile Template_files/font-awesome.min.css">
+    <link rel="stylesheet" href="./Personal Profile Template_files/bootstrap-switch.min.css">
+    <script src="./Personal Profile Template_files/bootstrap-switch.min.js.download"></script>
+    <script src="./Personal Profile Template_files/twemoji.min.js.download"></script>
+    <script src="./Personal Profile Template_files/lazy-load.min.js.download"></script>
+    <script src="./Personal Profile Template_files/socialyte.min.js.download"></script>
+    <link href="./Personal Profile Template_files/css" rel="stylesheet">
+    <link rel="stylesheet" href="./Personal Profile Template_files/style.css" type="text/css">
+</head>
 
+<body id="personal">
+
+    <!--Header with Nav -->
+    <header class="text-right">
+        <form class="text-left search" method="GET">
+            <input name="q" type="text" placeholder="Search..">
+        </form>
+        <div class="menu-icon">
+            <div class="dropdown">
+                <span class="dropdown-toggle" role="button" id="dropdownSettings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span class="hidden-xs hidden-sm">Settings</span> <i class="fa fa-cogs" aria-hidden="true"></i>
+                </span>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownSettings">
+                    <li>
+                        <a href="https://socialyte.codeplus.it/settings.html" title="Settings" data-toggle="modal" data-target="#settingsmodal">
+                            <div class="col-xs-4">
+                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-8 text-left">
+                                <span>Settings</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://socialyte.codeplus.it/personal-profile.html#" title="Settings">
+                            <div class="col-xs-4">
+                                <i class="fa fa-question" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-8 text-left">
+                                <span>FAQ</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://socialyte.codeplus.it/personal-profile.html#" title="Settings">
+                            <div class="col-xs-4">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-8 text-left">
+                                <span>Logout</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="second-icon dropdown menu-icon">
+            <span class="dropdown-toggle" role="button" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span class="hidden-xs hidden-sm">Notifications</span> <i class="fa fa-bell-o" aria-hidden="true"></i> <span class="badge">2</span>
+            </span>
+            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNotification">
+                <li class="new-not">
+                    <a href="https://socialyte.codeplus.it/personal-profile.html#" title="User name comment"><img src="./Personal Profile Template_files/user2.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
+                </li>
+                <li class="new-not">
+                    <a href="https://socialyte.codeplus.it/personal-profile.html#" title="User name comment"><img src="./Personal Profile Template_files/user3.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
+                </li>
+                <li>
+                    <a href="https://socialyte.codeplus.it/personal-profile.html#" title="User name comment"><img src="./Personal Profile Template_files/user4.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li><a href="https://socialyte.codeplus.it/personal-profile.html#" title="All notifications">All Notifications</a></li>
+            </ul>
+        </div>
+        <div class="second-icon menu-icon">
+            <span><a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile"><span class="hidden-xs hidden-sm">Profile</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+            </span>
+        </div>
+        <div class="second-icon menu-icon">
+            <span><a href="https://socialyte.codeplus.it/wall.html" title="Wall"><span class="hidden-xs hidden-sm">Wall</span> <i class="fa fa-database" aria-hidden="true"></i></a>
+            </span>
+        </div>
+    </header>
+
+    <!--Left Sidebar with info Profile -->
+    <div class="sidebar-nav">
+        <a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile">
+           <img src="./Personal Profile Template_files/user.jpg" alt="User name" class="img-circle img-user">
+        </a>
+        <h2 class="text-center hidden-xs"><a href=# title="Profile">My User</a></h2>
+		   
+		<a>&nbsp  &nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp &nbsp Posts &nbsp &nbsp</a>
+				<a>&nbsp &nbsp Friends &nbsp &nbsp </a> </br>
+				<a>&nbsp  &nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp </a>
+				<span id='post-count' class= "post-count" ></span>
+				 <a>&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp </a>
+				<span id='friend-count' ></span>
+        <p class="text-center user-description hidden-xs">
+            <i>Short Profile Info.</i>
+        </p>
+		<button id = 'download' >Download JSON</button>
+		<button id = 'repop' >Repop JSON</button>
+    </div>
+
+    <div class="content-posts profile-content">
+        <div class="banner-profile">
+        </div>
+        <!-- Tab Panel -->
+        <ul class="nav nav-tabs" background = "#691a99" role="tablist">
+            <li class="active"><a href="https://socialyte.codeplus.it/personal-profile.html#posts" role="tab" id="postsTab" data-toggle="tab" aria-controls="posts" aria-expanded="true">Last posts</a></li>
+            <li><a href="https://socialyte.codeplus.it/personal-profile.html#profile" role="tab" id="profileTab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Profile</a></li>
+            <li><a href="https://socialyte.codeplus.it/personal-profile.html#chat" role="tab" id="chatTab" data-toggle="tab" aria-controls="chat" aria-expanded="true">Chat</a></li>
+        </ul>
+
+        <!--Start Tab Content-->
+        <div class="tab-content">
+
+            <!-- Tab Posts -->
+            <div class="tab-pane fade active in" role="tabpanel" id="posts" aria-labelledby="postsTab">
+                <div id="posts-container" class="container-fluid container-posts">
+						<div class="card-post1">
+							<form id = "form" class = "form-inline" onsubmit="return false">
+							<a> Post</a>
+							<div class=input-group">
+								<input id = "post" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Share how you feel....."></input>
+						
+								<button id = 'postbtn' type="submit" class = "button1">Post</button>
+								
+							</div>
+
+						</form>
+				
+						</div>
+			
+                    <div class="card-post" id = 'card-post'>
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-2">
+                                <a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile">
+                                    <img src="./Personal Profile Template_files/user.jpg" alt="User name" class="img-circle img-user">
+                                </a>
+                            </div>
+                            <div class="col-xs-9 col-sm-10 info-user">
+                                <h3><a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile">My User</a></h3>
+                                <p><i><span id="time" style="float:right;"> </span></i></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2 data-post">
+                               <p><span id='display' class= "display" ></span></p>
+							   
+                                <div class="reaction">
+                                    <img draggable="false" class="emoji" alt="❤" src="./Personal Profile Template_files/2764.png"> 156 <img draggable="false" class="emoji" alt="😃" src="./Personal Profile Template_files/1f603.png"> 54
+                                </div>
+                               <!-- <div class="comments">
+                                    <div class="more-comments">View more comments</div>
+                                    <ul>
+                                        <li><b>User1</b> Lorem Ipsum Dolor si amet</li>
+                                        <li><b>User2</b> Lorem Ipsum Dolor si amet <img draggable="false" class="emoji" alt="😂" src="./Personal Profile Template_files/1f602.png"></li>
+                                    </ul>
+                                    <form>
+                                        <input type="text" class="form-control" placeholder="Add a comment">
+                                    </form>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                    
+          
+                </div>
+          
+            </div><!-- end Tab Posts -->
+
+            <!--Start Tab Profile-->
+            <div class="tab-pane fade" role="tabpanel" id="profile" aria-labelledby="profileTab">
+                <div class="container-fluid container-posts">
+                    <div class="card-post">
+                        <ul class="profile-data">
+                            <li><b>Username:</b> User</li>
+                            <li><b>Age:</b> 25</li>
+                            <li><b>Hobbies:</b> cooking</li>
+                            <li><b>Studies:</b> University of Nevada Reno</li>
+                            <li><b>Job:</b> Student</li>
+                            
+                        </ul>
+                        <p><a href="https://socialyte.codeplus.it/personal-profile.html" title="edit profile"><i class="fa fa-pencil" aria-hidden="true"></i> Edit profile</a></p>
+                    </div>
+                </div>
+            </div><!-- end tab Profile -->
+
+            <!-- Start Tab chat-->
+            <div class="tab-pane fade" role="tabpanel" id="chat" aria-labelledby="chatTab">
+                <div class="container-fluid container-posts">
+                   <!-- <div class="card-post">
+                        <div class="scrollbar-container">
+                            <div class="row row-user-list">
+                                <div class="col-sm-2 col-xs-3">
+                                    <img src="./Personal Profile Template_files/user2.jpg" alt="User name" class="img-circle img-user">
+                                </div>
+                                <div class="col-sm-7 col-xs-9">
+                                    <p><b>User Name</b> <span class="badge">1</span></p>
+                                    <p class="chat-time">An hour ago</p>
+                                    <p>Lorem ipsum</p>
+                                </div>
+                                <div class="col-sm-3 hidden-xs">
+                                    <p><a href="https://socialyte.codeplus.it/personal-profile.html" title="Replay"><span class="badge badge-replay">Replay &gt;</span></a></p>
+                                </div>
+                            </div>
+                            <div class="row row-user-list">
+                                <div class="col-sm-2 col-xs-3">
+                                    <img src="./Personal Profile Template_files/user3.jpg" alt="User name" class="img-circle img-user">
+                                </div>
+                                <div class="col-sm-7 col-xs-9">
+                                    <p><b>User Name</b></p>
+                                    <p class="chat-time">Yesterday</p>
+                                    <p>Lorem ipsum</p>
+                                </div>
+                                <div class="col-sm-3 hidden-xs">
+                                    <p><a href="https://socialyte.codeplus.it/personal-profile.html" title="Start chat"><span class="badge badge-message">Start chat &gt;</span></a></p>
+                                </div>
+                            </div>
+                            <div class="row row-user-list">
+                                <div class="col-sm-2 col-xs-3">
+                                    <img src="./Personal Profile Template_files/user4.jpg" alt="User name" class="img-circle img-user">
+                                </div>
+                                <div class="col-sm-7 col-xs-9">
+                                    <p><b>User Name</b></p>
+                                    <p class="chat-time">2 days ago</p>
+                                    <p>Lorem ipsum</p>
+                                </div>
+                                <div class="col-sm-3 hidden-xs">
+                                    <p><a href="https://socialyte.codeplus.it/personal-profile.html" title="Start chat"><span class="badge badge-message">Start chat &gt;</span></a></p>
+                                </div>
+                            </div>
+                            <div class="row row-user-list">
+                                <div class="col-sm-2 col-xs-3">
+                                    <img src="./Personal Profile Template_files/user5.jpg" alt="User name" class="img-circle img-user">
+                                </div>
+                                <div class="col-sm-7 col-xs-9">
+                                    <p><b>User Name</b></p>
+                                    <p class="chat-time">2 days ago</p>
+                                    <p>Lorem ipsum</p>
+                                </div>
+                                <div class="col-sm-3 hidden-xs">
+                                    <p><a href="https://socialyte.codeplus.it/personal-profile.html" title="Start chat"><span class="badge badge-message">Start chat &gt;</span></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div><!-- End Tab chat-->
+
+        </div><!-- Close Tab Content-->
+
+    </div><!--Close content posts-->
+	
+	
+	
+	
+
+    <!-- Modal container for settings--->
+    <div id="settingsmodal" class="modal fade text-center">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src ="./Personal Profile Template_files/posting.js"></script>
+
+</body></html>
