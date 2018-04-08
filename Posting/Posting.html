@@ -68,24 +68,24 @@
             </span>
             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNotification">
                 <li class="new-not">
-                    <a href="https://socialyte.codeplus.it/personal-profile.html#" title="User name comment"><img src="./Personal Profile Template_files/user2.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
+                    <a href=# title="User name comment"><img src="./Personal Profile Template_files/user2.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
                 </li>
                 <li class="new-not">
-                    <a href="https://socialyte.codeplus.it/personal-profile.html#" title="User name comment"><img src="./Personal Profile Template_files/user3.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
+                    <a href=# title="User name comment"><img src="./Personal Profile Template_files/user3.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
                 </li>
                 <li>
-                    <a href="https://socialyte.codeplus.it/personal-profile.html#" title="User name comment"><img src="./Personal Profile Template_files/user4.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
+                    <a href=# title="User name comment"><img src="./Personal Profile Template_files/user4.jpg" alt="User name" class="img-circle img-user-mini"> User comments your post</a>
                 </li>
                 <li role="separator" class="divider"></li>
                 <li><a href="https://socialyte.codeplus.it/personal-profile.html#" title="All notifications">All Notifications</a></li>
             </ul>
         </div>
         <div class="second-icon menu-icon">
-            <span><a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile"><span class="hidden-xs hidden-sm">Profile</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+            <span><a href=# title="Profile"><span class="hidden-xs hidden-sm">Profile</span> <i class="fa fa-user" aria-hidden="true"></i></a>
             </span>
         </div>
         <div class="second-icon menu-icon">
-            <span><a href="https://socialyte.codeplus.it/wall.html" title="Wall"><span class="hidden-xs hidden-sm">Wall</span> <i class="fa fa-database" aria-hidden="true"></i></a>
+            <span><a href=# title="Wall"><span class="hidden-xs hidden-sm">Wall</span> <i class="fa fa-database" aria-hidden="true"></i></a>
             </span>
         </div>
     </header>
@@ -107,7 +107,9 @@
             <i>Short Profile Info.</i>
         </p>
 		<button id = 'download' >Download JSON</button>
-		<button id = 'repop' >Repop JSON</button>
+
+		
+		
     </div>
 
     <div class="content-posts profile-content">
@@ -140,40 +142,43 @@
 				
 						</div>
 			
-                    <div class="card-post" id = 'card-post'>
-                        <div class="row">
-                            <div class="col-xs-3 col-sm-2">
-                                <a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile">
-                                    <img src="./Personal Profile Template_files/user.jpg" alt="User name" class="img-circle img-user">
-                                </a>
-                            </div>
-                            <div class="col-xs-9 col-sm-10 info-user">
-                                <h3><a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile">My User</a></h3>
-                                <p><i><span id="time" style="float:right;"> </span></i></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-8 col-sm-offset-2 data-post">
-                               <p><span id='display' class= "display" ></span></p>
-							   
-                                <div class="reaction">
-                                    <img draggable="false" class="emoji" alt="❤" src="./Personal Profile Template_files/2764.png"> 156 <img draggable="false" class="emoji" alt="😃" src="./Personal Profile Template_files/1f603.png"> 54
-                                </div>
-                               <!-- <div class="comments">
-                                    <div class="more-comments">View more comments</div>
-                                    <ul>
-                                        <li><b>User1</b> Lorem Ipsum Dolor si amet</li>
-                                        <li><b>User2</b> Lorem Ipsum Dolor si amet <img draggable="false" class="emoji" alt="😂" src="./Personal Profile Template_files/1f602.png"></li>
-                                    </ul>
-                                    <form>
-                                        <input type="text" class="form-control" placeholder="Add a comment">
-                                    </form>
-                                </div>-->
-                            </div>
-                        </div>
-                    </div>
+			
+						<div id = "innerdiv" class = "innerdiv" > 
+								<div class="card-post" id = 'card-post'>
+									<div class="row">
+										<div class="col-xs-3 col-sm-2">
+											<a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile">
+												<img id = "my_image" src="./Personal Profile Template_files/user.jpg" alt="User name" class="img-circle img-user">
+											</a>
+										</div>
+										<div class="col-xs-9 col-sm-10 info-user">
+											<!--<h3><a href="https://socialyte.codeplus.it/personal-profile.html" title="Profile">My User</a></h3>-->
+											<h3><p><span class= "name" ></span></p></h3>
+											<p><i><span class ="time" style="float:right;"> </span></i></p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-8 col-sm-offset-2 data-post">
+										   <p><span class= "display" ></span></p>
+										   
+											<div class="reaction">
+												<img draggable="false" class="emoji" alt="❤" src="./Personal Profile Template_files/2764.png"> 156 <img draggable="false" class="emoji" alt="😃" src="./Personal Profile Template_files/1f603.png"> 54
+											</div>
+										   <!-- <div class="comments">
+												<div class="more-comments">View more comments</div>
+												<ul>
+													<li><b>User1</b> Lorem Ipsum Dolor si amet</li>
+													<li><b>User2</b> Lorem Ipsum Dolor si amet <img draggable="false" class="emoji" alt="😂" src="./Personal Profile Template_files/1f602.png"></li>
+												</ul>
+												<form>
+													<input type="text" class="form-control" placeholder="Add a comment">
+												</form>
+											</div>-->
+										</div>
+									</div>
+								</div>
 
-                    
+						</div>
           
                 </div>
           
