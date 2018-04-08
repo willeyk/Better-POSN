@@ -11,10 +11,6 @@
 
 <p id="demo"></p>
 
-<script>
-
-</script>
-
     <script type="text/javascript">
       function handleClientLoad() {
         // Loads required libraries for functionality
@@ -47,7 +43,7 @@
 			// If status changes to signed in, makes call to Google API
 			if (isSignedIn) 
 			{
-				gapi.client.load('drive', 'v3', isPOSNSetup);
+				gapi.client.load('drive', 'v3', makeApiCall2);
 			}
       }
 
@@ -66,9 +62,9 @@
 	 
 	 function isPOSNSetup()
 	 {
-		folderName = "name= 'POSN_Directory'";
-		isTrashed = "trashed = false"
-		query = folderName + 'and' + isTrashed;
+		var folderName = "name= 'POSN_Directory'";
+		var isTrashed = "trashed = false"
+		var query = folderName + 'and' + isTrashed;
 		
 		//Function will essentially search for the folder that contains
 		//application data to see if POSN is setup
@@ -78,6 +74,8 @@
 		}).then(function(response) 
 		{
 			console.log(response.result);
+			addPermissions(response.result.files[0].id, "slayer441139@gmail.com")
+			showPermissions(response.result.files[0].id)
 			if( response.result.files.length == 0 )
 			{
 				//If folder is not found (POSN not initialized),
@@ -98,6 +96,41 @@
 		makeApplicationFolders(); 
 	 }
 	 
+	function showPermissions( fileID )
+	{
+		gapi.client.drive.permissions.list(
+		{
+			'fileId' : fileID
+		}).then(function(response)
+		{
+			console.log(response.result)
+		}, function(reason)
+		{
+			console.log('Error: ' + reason.result.error.message);
+		});
+	}
+	
+	function addPermissions( fileID, emailAddress )
+	{
+		friendRole = "reader";
+		permType = 'user';
+		requestBody = {
+			"type": permType,
+			"emailAddress": emailAddress,
+			"role": friendRole,
+		}
+		gapi.client.drive.permissions.create(
+		{
+			'fileId' : fileID,
+			resource : requestBody
+		}).then(function(response)
+		{
+			console.log(response.result)
+		}, function(reason)
+		{
+			console.log('Error: ' + reason.result.error.message);
+		});
+	}
 	function makeApplicationFolders()
 	{
 		mimeType = 'application/vnd.google-apps.folder'
@@ -113,6 +146,7 @@
 		}).then(function(response) 
 		{
 			console.log(response.result);
+			
 			makePhotosFolder(response.result.id);
 			makeCommentsFolder(response.result.id);
 			makeMusicFolder(response.result.id);
@@ -310,14 +344,15 @@
 	  function makeApiCall2()
 	  {
 		//Problems: order doesn't appear to change result, get give itemID and info but not actual file in postable format		
-		var query = "";
-		order = 'folder'
+		var order = 'folder'
+		var isTrashed = "trashed = false"
 		var numberOfFiles = 10;
 		//Function returns a list of files in google drive
         gapi.client.drive.files.list(
 		{    
 			 'maxResults': numberOfFiles,
-			 'orderBy': order
+			 'orderBy': order,
+			 'q' : isTrashed,
 		}).then(function(response) 
 		{
 			console.log(response.result);
@@ -333,7 +368,7 @@
 				fields: 'webContentLink'
 			}).then(function(response) 
 			{
-				//console.log(response.body);
+				console.log(response.body);
 			},function(reason)
 			{
 				console.log('Error: ' + reason.result.error.message);
@@ -363,7 +398,7 @@
 	  }
     </script>
     <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
+      onload="this.onload=handleClientLoad()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
     <button id="signin-button" onclick="handleSignInClick()">Sign In</button>
