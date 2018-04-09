@@ -43,7 +43,7 @@
 			// If status changes to signed in, makes call to Google API
 			if (isSignedIn) 
 			{
-				gapi.client.load('drive', 'v3', makeApiCall2);
+				gapi.client.load('drive', 'v3', isPOSNSetup);
 			}
       }
 
@@ -56,9 +56,6 @@
 	  {
 			gapi.auth2.getAuthInstance().signOut();
       }
-
-	  
-	 
 	 
 	 function isPOSNSetup()
 	 {
@@ -74,8 +71,6 @@
 		}).then(function(response) 
 		{
 			console.log(response.result);
-			addPermissions(response.result.files[0].id, "slayer441139@gmail.com")
-			showPermissions(response.result.files[0].id)
 			if( response.result.files.length == 0 )
 			{
 				//If folder is not found (POSN not initialized),
@@ -93,44 +88,10 @@
 	 
 	 function setupPOSN()
 	 {
-		makeApplicationFolders(); 
+		makeApplicationFolders();
 	 }
 	 
-	function showPermissions( fileID )
-	{
-		gapi.client.drive.permissions.list(
-		{
-			'fileId' : fileID
-		}).then(function(response)
-		{
-			console.log(response.result)
-		}, function(reason)
-		{
-			console.log('Error: ' + reason.result.error.message);
-		});
-	}
-	
-	function addPermissions( fileID, emailAddress )
-	{
-		friendRole = "reader";
-		permType = 'user';
-		requestBody = {
-			"type": permType,
-			"emailAddress": emailAddress,
-			"role": friendRole,
-		}
-		gapi.client.drive.permissions.create(
-		{
-			'fileId' : fileID,
-			resource : requestBody
-		}).then(function(response)
-		{
-			console.log(response.result)
-		}, function(reason)
-		{
-			console.log('Error: ' + reason.result.error.message);
-		});
-	}
+
 	function makeApplicationFolders()
 	{
 		mimeType = 'application/vnd.google-apps.folder'
@@ -258,8 +219,67 @@
         });
 	}
 	
+	function makeOtherFolder(directoryID)
+	{
+		directory = [directoryID]
+		mimeType = 'application/vnd.google-apps.folder'
+		name = 'Other_Files'
+		bodyMetadata = 
+		{
+			'name' : name,
+			'mimeType' : mimeType,
+			'parents' : directory
+		}
+		
+		gapi.client.drive.files.create(
+		{    
+			resource : bodyMetadata
+		}).then(function(response) 
+		{
+			console.log(response.result);
+			
+        }, function(reason) 
+		{
+			console.log('Error: ' + reason.result.error.message);
+        });
+	}
+	
 	 
-	 
+	 	function showPermissions( fileID )
+	{
+		gapi.client.drive.permissions.list(
+		{
+			'fileId' : fileID
+		}).then(function(response)
+		{
+			console.log(response.result)
+		}, function(reason)
+		{
+			console.log('Error: ' + reason.result.error.message);
+		});
+	}
+	
+	function addPermissions( fileID, emailAddress )
+	{
+		friendRole = "reader";
+		permType = 'user';
+		requestBody = {
+			"type": permType,
+			"emailAddress": emailAddress,
+			"role": friendRole,
+		}
+		gapi.client.drive.permissions.create(
+		{
+			'fileId' : fileID,
+			resource : requestBody
+		}).then(function(response)
+		{
+			console.log(response.result)
+		}, function(reason)
+		{
+			console.log('Error: ' + reason.result.error.message);
+		});
+	}
 	 
 	 
 	 
@@ -341,7 +361,7 @@
 		*/
 	  }
 	  
-	  function makeApiCall2()
+	  function getPhotoLinks()
 	  {
 		//Problems: order doesn't appear to change result, get give itemID and info but not actual file in postable format		
 		var order = 'folder'
@@ -352,7 +372,7 @@
 		{    
 			 'maxResults': numberOfFiles,
 			 'orderBy': order,
-			 'q' : isTrashed,
+			 'q' : isTrashed
 		}).then(function(response) 
 		{
 			console.log(response.result);
@@ -373,24 +393,6 @@
 			{
 				console.log('Error: ' + reason.result.error.message);
 			});
-			
-			/*
-			myPath = '/drive/v3/files/' + fileID + '?alt=media'
-			header = 'Authorization: Bearer ' + gapi.client.AccessToken
-			request = gapi.client.request({
-            'path': myPath,
-            'method': 'GET',
-			'header': header
-			}).execute(function(jsonResp, rawResp) {
-				console.log(jsonResp);
-				console.log(rawResp);
-                        //do the rest of what you need to do
-                      });
-					  */
-			
-			
-			
-			
         }, function(reason) 
 		{
 			console.log('Error: ' + reason.result.error.message);
