@@ -24,7 +24,7 @@
 			gapi.client.init(
 			{
 				apiKey: 'AIzaSyBFL7e4jh939anq2JsOUeFCTTP41Jz1GoY',
-				discoveryDocs: ["https://people.googleapis.com/$discovery/rest"],
+				discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
 				clientId: '834692356537-5fn43u118ogta150l995623a7auu52fg.apps.googleusercontent.com',
 				scope: 'https://www.googleapis.com/auth/drive'
 			}).then(function () 
@@ -43,7 +43,13 @@
 			// If status changes to signed in, makes call to Google API
 			if (isSignedIn) 
 			{
-				gapi.client.load('drive', 'v3', isPOSNSetup);
+				//If POSN is not setup then setup
+				//If POSN is setup then get photo links
+				if( isPOSNSetup() == true)
+				{
+					getPhotoLinks();
+					
+				}
 			}
       }
 
@@ -76,14 +82,13 @@
 				//If folder is not found (POSN not initialized),
 				//then initialize setup 
 				setupPOSN();
-				return;
 			}
 			console.log("POSN is setup");
-			
         }, function(reason) 
 		{
 			console.log('Error: ' + reason.result.error.message);
         });
+		return true;			
 	 }
 	 
 	 function setupPOSN()
@@ -94,6 +99,7 @@
 
 	function makeApplicationFolders()
 	{
+		subFolderNames = ['Photos','Comments','Music','Videos','Other_Files']
 		mimeType = 'application/vnd.google-apps.folder'
 		bodyMetadata = 
 		{
@@ -107,11 +113,7 @@
 		}).then(function(response) 
 		{
 			console.log(response.result);
-			
-			makePhotosFolder(response.result.id);
-			makeCommentsFolder(response.result.id);
-			makeMusicFolder(response.result.id);
-			makeVideosFolder(response.result.id);
+			makeSubFolders(response.result.id, subFolderNames);
 			
         }, function(reason) 
 		{
@@ -119,132 +121,34 @@
         });
 	}
 	 
-	function makePhotosFolder( directoryID )
+	function makeSubFolders( directoryID, subFolderNames )
 	{
+		numOfSubFolders = 5;
 		directory = [directoryID]
 		mimeType = 'application/vnd.google-apps.folder'
-		name = 'Photos'
-		bodyMetadata = 
+		for( i = 0; i < numOfSubFolders; i++ )
 		{
-			'name' : name,
-			'mimeType' : mimeType,
-			'parents' : directory
-		}
-		
-		gapi.client.drive.files.create(
-		{    
-			resource : bodyMetadata
-		}).then(function(response) 
-		{
-			console.log(response.result);
+			bodyMetadata = 
+			{
+				'name' : subFolderNames[i],
+				'mimeType' : mimeType,
+				'parents' : directory
+			}
 			
-        }, function(reason) 
-		{
-			console.log('Error: ' + reason.result.error.message);
-        });
+			gapi.client.drive.files.create(
+			{    
+				resource : bodyMetadata
+			}).then(function(response) 
+			{
+				console.log(response.result);
+				
+			}, function(reason) 
+			{
+				console.log('Error: ' + reason.result.error.message);
+			});
+		}
 	}
 	
-	function makeCommentsFolder(directoryID)
-	{
-		directory = [directoryID]
-		mimeType = 'application/vnd.google-apps.folder'
-		name = 'Comments'
-		bodyMetadata = 
-		{
-			'name' : name,
-			'mimeType' : mimeType,
-			'parents' : directory
-		}
-		
-		gapi.client.drive.files.create(
-		{    
-			resource : bodyMetadata
-		}).then(function(response) 
-		{
-			console.log(response.result);
-			
-        }, function(reason) 
-		{
-			console.log('Error: ' + reason.result.error.message);
-        });
-	}
-	
-	function makeMusicFolder(directoryID)
-	{
-		directory = [directoryID]
-		mimeType = 'application/vnd.google-apps.folder'
-		name = 'Music'
-		bodyMetadata = 
-		{
-			'name' : name,
-			'mimeType' : mimeType,
-			'parents' : directory
-		}
-		
-		gapi.client.drive.files.create(
-		{    
-			resource : bodyMetadata
-		}).then(function(response) 
-		{
-			console.log(response.result);
-			
-        }, function(reason) 
-		{
-			console.log('Error: ' + reason.result.error.message);
-        });
-	}
-	
-	function makeVideosFolder(directoryID)
-	{
-		directory = [directoryID]
-		mimeType = 'application/vnd.google-apps.folder'
-		name = 'Videos'
-		bodyMetadata = 
-		{
-			'name' : name,
-			'mimeType' : mimeType,
-			'parents' : directory
-		}
-		
-		gapi.client.drive.files.create(
-		{    
-			resource : bodyMetadata
-		}).then(function(response) 
-		{
-			console.log(response.result);
-			
-        }, function(reason) 
-		{
-			console.log('Error: ' + reason.result.error.message);
-        });
-	}
-	
-	function makeOtherFolder(directoryID)
-	{
-		directory = [directoryID]
-		mimeType = 'application/vnd.google-apps.folder'
-		name = 'Other_Files'
-		bodyMetadata = 
-		{
-			'name' : name,
-			'mimeType' : mimeType,
-			'parents' : directory
-		}
-		
-		gapi.client.drive.files.create(
-		{    
-			resource : bodyMetadata
-		}).then(function(response) 
-		{
-			console.log(response.result);
-			
-        }, function(reason) 
-		{
-			console.log('Error: ' + reason.result.error.message);
-        });
-	}
-	
-	 
 	 	function showPermissions( fileID )
 	{
 		gapi.client.drive.permissions.list(
@@ -285,8 +189,6 @@
 	 
 	    function uploadFile() {
 			/*
-
-		
 		var upload = document.getElementById("myFile");
 		var file = upload.files[0];
 		console.log(file);
@@ -360,44 +262,109 @@
 		});
 		*/
 	  }
+	 
+	 
+	 
+	//Placeholder for the one second delay that will occur when too many API calls
+	//are made in a second. Code was originally a exponential backoff but right now
+	//only errors are related to too many API calls (defined as 10 per sec by Google)
+	
+	// A function that keeps trying, "toTry" until it returns true or has
+	// tried "max" number of times. First retry has a delay of "delay".
+	// "callback" is called upon success.
+	function APIBackoff(getWebLinks, delay, callback) 
+	{
+		var result = getWebLinks();
+		if (result) 
+		{
+			
+		} 
+		else 
+		{
+			setTimeout(function() { console.log("too many api requests") }, delay);
+		}
+	}
+
 	  
+	  
+	  
+	  
+	  //returns a list of web links for images in the Photos folder
+	  
+	  //Issue: when making api calls, user limit per second is 10 calls
+	  //You can only get one link at a time so a call must be made for each.
+	  //Meaning it's easy to go over 10 calls with 10+ photos
 	  function getPhotoLinks()
 	  {
-		//Problems: order doesn't appear to change result, get give itemID and info but not actual file in postable format		
 		var order = 'folder'
+		var photoDirectory = "'1VsFK73KutpZziLFYIihvXlhPIHpH8zbd' in parents"
 		var isTrashed = "trashed = false"
-		var numberOfFiles = 10;
 		//Function returns a list of files in google drive
         gapi.client.drive.files.list(
 		{    
-			 'maxResults': numberOfFiles,
 			 'orderBy': order,
-			 'q' : isTrashed
+			 'q' : photoDirectory
 		}).then(function(response) 
 		{
-			console.log(response.result);
+			console.log(response.result.files);
+			var filesList = response.result.files;
+			var webLinkList = [];
+			getWebLinks( filesList, webLinkList );
 			
-			//Takes fileID of first item in list
-			fileID = response.result.files[12].id
-			console.log(fileID);
-			
-			//Function gets information on a file based of given file ID
-			gapi.client.drive.files.get(
-			{
-				'fileId': fileID,
-				fields: 'webContentLink'
-			}).then(function(response) 
-			{
-				console.log(response.body);
-			},function(reason)
-			{
-				console.log('Error: ' + reason.result.error.message);
-			});
         }, function(reason) 
 		{
 			console.log('Error: ' + reason.result.error.message);
         });
 	  }
+	  
+	  //gets a list of web content links from file IDs
+	  //using pop or shift on filesList messes up data
+	  function getWebLinks( filesList, webLinkList )
+	  {
+			i = 0;
+			//Gets web content links for all the photos in the folder
+			while( i < filesList.length )
+			{
+				gapi.client.drive.files.get(
+				{
+					'fileId': filesList[i].id,
+					fields: 'webContentLink'
+				}).then(function(response) 
+				{
+					webLink = JSON.parse(response.body);
+					webLinkList.push(webLink.webContentLink);
+					//console.log(filesList);
+				},function(reason)
+				{
+					console.log('Error: ' + reason.result.error.message);
+				});
+				i++;
+			}
+			console.log(webLinkList);
+	  }
+	  
+	  function getPhotosFolderId ()
+	  {
+		  	var folderName = "name= 'Photos'";
+			var isTrashed = "trashed = false"
+			var query = folderName + 'and' + isTrashed;
+			var photosID;
+			gapi.client.drive.files.list(
+			{    
+				 'q' : query
+			}).then(function(response) 
+			{
+				console.log(response.result);
+				photosID = response.result.files[0].id;
+				console.log(photosID)
+			}, function(reason) 
+			{
+				console.log('Error: ' + reason.result.error.message);
+			});
+			return photosID;
+
+	  }
+	  
     </script>
     <script async defer src="https://apis.google.com/js/api.js"
       onload="this.onload=handleClientLoad()"
