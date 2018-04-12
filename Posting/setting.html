@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 
-	<header class = "text-right"> 
+	<head class = "text-right"> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 			<title>Personal Profile Template</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 			<link rel="stylesheet" href="./settings.css" type="text/css">
-		</head>
-			
+		
+	
 				
 				
-	</header>
+	</head>
 
 	<body>
 
@@ -23,11 +23,12 @@
 						<div class="bg-white pinside40 mb30">
 							
 										<!-- Text input-->
-							<div class="add_listing_info">
+							<div class="add_listing_info" id = "add_listing_info">
 								<h3>Personal Information</h3>	
-								<div class="form-group" id = "first">
+								<div class="form-group" >
 									<label class="col-md-4 control-label" for="name">First Name<span class="required">*</span></label>
-									<button id ="fedit" type = "button"> edit</button>
+									<span class= "firstname" > </span>
+									<button id ="fedit" class = "stg-btn" type = "button" style= "float:right"> edit</button>
 									<div id = "fname" class="fname">
 									
 										<input id = "first" name = "post" type="text" autocomplete="off" class="form-control" placeholder="First Name"></input>			
@@ -38,11 +39,11 @@
 								</div>
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="name">Last Name<span class="required">*</span></label>
-									<span class= "name" > </span>
-									<button id ="ledit" type = "button"> edit</button>
+									<span class= "lastname" > </span>
+									<button id ="ledit"  class = "stg-btn" type = "button"style= "float:right"> edit</button>
 									<div id = "lname" class="lname">
 									
-										<input id = "first" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Last Name"></input>			
+										<input id = "last" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Last Name"></input>			
 										
 									</div>
 									
@@ -50,10 +51,11 @@
 								</div>
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="name">Birthday<span class="required">*</span></label>
-									<button id ="bedit" type = "button"> edit</button>
+									<span class= "birthday" > </span>
+									<button id ="bedit"  class = "stg-btn" type = "button"style= "float:right"> edit</button>
 									<div id = "bname" class="lname">
 									
-										<input id = "first" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Birthday"></input>			
+										<input id = "birth" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Birthday"></input>			
 										
 									</div>
 									
@@ -61,10 +63,11 @@
 								</div>
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="name">Email<span class="required">*</span></label>
-									<button id ="eedit" type = "button"> edit</button>
+									<span class= "email" > </span>
+									<button id ="eedit"  class = "stg-btn" type = "button" style= "float:right"> edit</button>
 									<div id = "ename" class="lname">
 									
-										<input id = "first" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Email"></input>			
+										<input id = "em" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Email"></input>			
 										
 									</div>
 									
@@ -72,10 +75,11 @@
 								</div>
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="name">Phone<span class="required">*</span></label>
-									<button id ="pedit" type = "button"> edit</button>
+									<span class= "phone" > </span>
+									<button id ="pedit"  class = "stg-btn" type = "button" style= "float:right"> edit</button>
 									<div id = "pname" class="lname">
 									
-										<input id = "first" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Phone"></input>			
+										<input id = "ph" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Phone"></input>			
 										
 									</div>
 									
@@ -91,7 +95,7 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="submit"></label>
 								<div class="col-md-4">
-									<button id="submit" name="submit" class="submit">Update Profile</button>
+									<button id="submit" name="submit" class="submit" type = "button">Update Profile</button>
 								</div>
 							</div>
 						</div>
