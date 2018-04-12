@@ -3,16 +3,33 @@ body {
      background: #dd58e2;
     font-family: Poppins, sans-serif;
 }
+.setting-container{
+
+	
+}
 .posts-container{
 	
    background: #ffffff;
     padding: 15px;
-    display: block;
-    overflow: hidden;
+     overflow: hidden;
     margin-bottom: 10px;
 	border-radius: .55rem;
 	width : 800px;
 	margin: 0 auto;
+	border-radius: .50rem;	
+	
+}
+.stg-btn{
+	background-color: #ad2ab2; 
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+	border-radius: .25rem;
+	margin-left: 24px;
 	
 }
 
