@@ -1,1 +1,4 @@
 # Better-POSN
+
+# Abstract
+The development of cloud storage is starting to become useful to maintain personal data via the internet. Online Social Networks (OSN) is a web development that promotes these social interactions. On popular social networks such as Facebook, Twitter and Instagram, users have a public or private profile where they can share information. When combining both innovations, Personal Online Social Networks (POSN) exists. POSN are networks where users can establish their own social network through cloud storage. In POSN a user’s cloud is the access point where other devices can connect to. Each individual user holds ownership over their own data, instead of Facebook or any other social media network. In other words, it is a Facebook-like platform without central repositories. 
