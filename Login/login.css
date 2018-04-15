@@ -44,7 +44,7 @@ body b{
 	padding: 45px; 
 	text-align: center; 
 }
-.form input[type = name]{
+/*.form input[type = name]{
     width: 55%;
     padding: 5px 5px;
     margin: 8px 0;
@@ -53,7 +53,7 @@ body b{
     background-color: #FFFFFF;
 	border-radius: 25px;
     color: purple;
-}
+}*/ 
 
 
 li {
@@ -84,7 +84,7 @@ p{
 	color: white; 
 }
 
-.form .login{
+.login{
 	position: absolute; 
 	top: calc (50%-75px); 
 	left: calc(50%-50px); 
@@ -93,7 +93,7 @@ p{
 	padding: 10px; 
 }
 
-.form .register{
+ .register{
     position: absolute; 
 	top: calc (50%-75px); 
 	left: calc(50%-50px); 
@@ -123,9 +123,7 @@ p{
     color: purple;
 }
 
-.register{
-	display: none; 
-}
+
 .login input[type=text] {
     width: 75%;
     padding: 12px 20px;
@@ -164,13 +162,13 @@ p{
 .login input[type=reset]:hover{
 	opacity: 0.5;
 }
-.form .message{
+.login .message{
 	margin: 15px 0 0; 
 	color: palevioletred; 
 	font-size: 12px; 
 }
 
-.form .message a{
+.login .message a{
 	color: blue; 
 	text-decoration: none; 
 }
@@ -180,7 +178,9 @@ register input[type=button]:hover{
 	opacity: 0.5;
 }
 
-
+.register {
+	display: none; 
+}
 .login input[type=reset] {
     width: 30%;
     padding: 5px 5px;
