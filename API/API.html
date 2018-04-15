@@ -205,31 +205,26 @@
 	//Can upload a text file to Google Drive root
 	function uploadFile() 
 	{
-		//Read in file to be uploaded
+		//Read in file to be uploaded from upload button
 		var uploadFile = document.getElementById("myFile").files[0];
 		var fileContent; 
-		console.log(uploadFile)
 		if (uploadFile) 
 		{
 			var name = uploadFile.name;
 			var fileSize = uploadFile.size;
 			var mimeType = uploadFile.type;
-				
 			var reader = new FileReader();
-			reader.readAsText(uploadFile, "UTF-8");
+			reader.readAsBinaryString(uploadFile);
 			reader.onload = function (evt) 
 			{
 				document.getElementById("myFile").innerHTML = evt.target.result;
 					
 				//evt.target.result is actual text/data in file
-				fileContent = evt.target.result;
-				console.log(fileContent);
-					
+				//Encoded in base64
+				fileContent = btoa(evt.target.result);	
 					
 				//Rest of function below handles uploading to Google Drive
 				var auth_token = gapi.client.getToken().access_token;
-				console.log(auth_token);
-
 				const boundary = '-------314159265358979323846';
 				const delimiter = "\r\n--" + boundary + "\r\n";
 				const close_delim = "\r\n--" + boundary + "--";
@@ -242,7 +237,9 @@
 				var multipartRequestBody =
 				delimiter +  'Content-Type: application/json\r\n\r\n' +
 				JSON.stringify(metadata) +
-				delimiter + 'Content-Type: application/json\r\n\r\n' +
+				delimiter +
+				'Content-Type: application/json' + '\n' +
+				'Content-Transfer-Encoding: base64\r\n\r\n' +
 				fileContent +
 				close_delim;
 
@@ -253,7 +250,6 @@
 					'headers': { 'Content-Type': 'multipart/form-data; boundary="' + boundary + '"', 'Authorization': 'Bearer ' + auth_token, },
 					'body': multipartRequestBody 
 				}).execute(function(file) { 
-					console.log(file);
 					console.log("Wrote to file " + file.name + " id: " + file.id); 
 				}, function(error){
 						console.log(error);
