@@ -9,6 +9,18 @@ meRCb9wlKVWAz8uB03roqGiO---->
 
 <!---work on google sign in button, home link, sign in link, sign out link, database ---> 
 
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
 <link rel="stylesheet" href="login.css">
 
@@ -20,10 +32,13 @@ meRCb9wlKVWAz8uB03roqGiO---->
 	<script type="text/javascript" src="jquery.form.js"></script> <!-- Helps with animations -->
 <script src="login.js"></script>
 <html>
+	
+
 
 	<head>
 
 	<body>
+<!--<div id="SITE_BACKGROUND" class="siteBackground" style="position: absolute; top: 0px; height: 1578px; width: 980px;"><div id="SITE_BACKGROUND_previous_noPrev" class="siteBackgroundprevious" style="width: 100%; height: 100%;"><div id="SITE_BACKGROUNDpreviousImage" class="siteBackgroundpreviousImage"></div><div id="SITE_BACKGROUNDpreviousVideo" class="siteBackgroundpreviousVideo"></div><div id="SITE_BACKGROUND_previousOverlay_noPrev" class="siteBackgroundpreviousOverlay"></div></div><div id="SITE_BACKGROUND_current_th4j0_desktop_bg" data-position="fixed" class="siteBackgroundcurrent" style="top: 0px; background-color: rgb(255, 255, 255); position: fixed; width: 100%; height: 100%;"><div id="SITE_BACKGROUND_currentImage_th4j0_desktop_bg" data-type="bgimage" data-height="100%" class="siteBackgroundcurrentImage" style="position: absolute; top: 0px; width: 100%; opacity: 1; background-size: cover; background-position: center center; background-repeat: no-repeat; height: 100%; background-image: url(&quot;https://static.wixstatic.com/media/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.jpg/v1/fill/w_1920,h_1080,al_c,q_85/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.webp&quot;);" data-image-css="{&quot;backgroundSize&quot;:&quot;cover&quot;,&quot;backgroundPosition&quot;:&quot;center center&quot;,&quot;backgroundRepeat&quot;:&quot;no-repeat&quot;,&quot;height&quot;:&quot;100%&quot;}"></div><div data-quality="1080p" data-player-type="html5" class="siteBackgroundcurrentVideo bgVideo" id="SITE_BACKGROUNDcurrentVideo" style="width: 100%;"><video role="presentation" preload="auto" playsinline="" id="SITE_BACKGROUNDcurrentVideovideo" class="bgVideovideo" style="opacity: 1; position: absolute; min-width: 1044px; min-height: 587px; left: -128px; top: 0px;" width="1044" height="587" src="https://video.wixstatic.com/video/11062b_40811fcc9cac4a5bbfb0d93aaa94d70d/1080p/mp4/file.mp4"></video><div data-style="display:none" class="bgVideoposter" id="SITE_BACKGROUNDcurrentVideoposter" style="position: relative; width: 788px; height: 587px; display: none;"><img id="SITE_BACKGROUNDcurrentVideoposterimage" alt="" data-type="image" src="https://static.wixstatic.com/media/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.jpg/v1/fill/w_788,h_587,al_c,q_85,usm_0.66_1.00_0.01/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.webp" style="width: 788px; height: 587px; object-fit: cover;"></div></div><div id="SITE_BACKGROUND_currentOverlay_th4j0_desktop_bg" class="siteBackgroundcurrentOverlay" style="position: absolute; top: 0px; width: 100%; height: 100%;"></div></div></div> ---> 
 
 <ul>
 	<li><a href = "http://personalonlinesocialnetwork.com "class="active" href="#posn">About POSN</a></li>
@@ -94,5 +109,4 @@ meRCb9wlKVWAz8uB03roqGiO---->
 		
 
 		</html>
-
 
