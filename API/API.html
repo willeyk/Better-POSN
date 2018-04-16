@@ -47,7 +47,7 @@
 				//If POSN is setup then get photo links
 				if( isPOSNSetup() == true)
 				{
-					
+					getPhotoLinks();
 				}
 			}
       }
@@ -96,6 +96,7 @@
 	 }
 	 
 
+	 //Makes folders needed to run the POSN application
 	function makeApplicationFolders()
 	{
 		subFolderNames = ['Photos','Comments','Music','Videos','Other_Files']
@@ -120,6 +121,7 @@
         });
 	}
 	 
+	//Makes each individual subfolder as specificed
 	function makeSubFolders( directoryID, subFolderNames )
 	{
 		numOfSubFolders = 5;
@@ -148,7 +150,8 @@
 		}
 	}
 	
-	 	function showPermissions( fileID )
+	//Shows information about a file's permissions
+	function showPermissions( fileID )
 	{
 		gapi.client.drive.permissions.list(
 		{
@@ -162,6 +165,7 @@
 		});
 	}
 	
+	//Adds a permission to a file using email address
 	function addPermissions( fileID, emailAddress )
 	{
 		friendRole = "reader";
@@ -182,25 +186,7 @@
 		{
 			console.log('Error: ' + reason.result.error.message);
 		});
-	}
-	 
-	
-	function getFileContents() 
-	{
-		var file = document.getElementById("myFile").files[0];
-		if (file) 
-		{
-			var reader = new FileReader();
-			reader.readAsText(file, "UTF-8");
-			reader.onload = function (evt) {
-				document.getElementById("myFile").innerHTML = evt.target.result;
-			}
-			reader.onerror = function (evt) {
-				document.getElementById("myFile").innerHTML = "error reading file";
-			}
-		}
-	}       
-
+	}    
 	
 	//Can upload a text file to Google Drive root
 	function uploadFile() 
@@ -260,87 +246,103 @@
 			}
 		}
 	 }
-	 
-	 
-	 
-	//Placeholder for the one second delay that will occur when too many API calls
-	//are made in a second. Code was originally a exponential backoff but right now
-	//only errors are related to too many API calls (defined as 10 per sec by Google)
-	
-	// A function that keeps trying, "toTry" until it returns true or has
-	// tried "max" number of times. First retry has a delay of "delay".
-	// "callback" is called upon success.
-	function APIBackoff(getWebLinks, delay, callback) 
-	{
-		var result = getWebLinks();
-		if (result) 
-		{
-			
-		} 
-		else 
-		{
-			setTimeout(function() { console.log("too many api requests") }, delay);
-		}
-	}
-
 	  
-	  
-	  
-	  
-	  //returns a list of web links for images in the Photos folder
-	  
-	  //Issue: when making api calls, user limit per second is 10 calls
-	  //You can only get one link at a time so a call must be made for each.
-	  //Meaning it's easy to go over 10 calls with 10+ photos
+	  //gives a list of web links for images in the Photos folder
 	  function getPhotoLinks()
 	  {
 		var order = 'folder'
 		var photoDirectory = "'1VsFK73KutpZziLFYIihvXlhPIHpH8zbd' in parents"
 		var isTrashed = "trashed = false"
 		//Function returns a list of files in google drive
-        gapi.client.drive.files.list(
-		{    
-			 'orderBy': order,
-			 'q' : photoDirectory
-		}).then(function(response) 
-		{
-			console.log(response.result.files);
-			var filesList = response.result.files;
-			var webLinkList = [];
-			getWebLinks( filesList, webLinkList );
+        var listPromise = Promise.resolve(gapi.client.drive.files.list(
+			{    
+				 'orderBy': order,
+				 'q' : photoDirectory
+			}).then(function(response) 
+			{
+				console.log(response.result.files);
+				var filesList = response.result.files;
+				var webLinkList = [];
+				getWebLinks( filesList, webLinkList );
+				return webLinkList;
+			}, function(reason) 
+			{
+				console.log('Error: ' + reason.result.error.message);
+			}));
 			
-        }, function(reason) 
+		listPromise.then(function(value)
 		{
-			console.log('Error: ' + reason.result.error.message);
-        });
+			//Do whatever you need with list of Weblinks
+			//value is webLinkList
+			console.log(value);
+			return value;
+		}).then(function(value)
+		{
+			//Do whatever you need with list of Weblinks
+			//value is webLinkList
+		});
 	  }
+	 
 	  
-	  //gets a list of web content links from file IDs
-	  //using pop or shift on filesList messes up data
-	  function getWebLinks( filesList, webLinkList )
-	  {
+	//Successfully implemented batching of requests to allow for 10+
+	//Needs some error checking
+	function getWebLinks( filesList, webLinkList )
+	{
+		//Gets web content links for all the photos in the folder
+		var i = 0
+		var callList = [];
+		var httpBatch = gapi.client.newBatch()
+		var webLink;
+		while( i < filesList.length )
+		{
+			currentID = filesList[i].id;
+			callList.push(gapi.client.drive.files.get(
+			{
+				'fileId': currentID,
+				fields: 'webContentLink'
+			}));
+			httpBatch.add(callList[i])
+			i++;
+		}
+		console.log(httpBatch);
+		httpBatch.then(function(onFulfilled)
+		{
 			i = 0;
-			//Gets web content links for all the photos in the folder
+			myResult = onFulfilled.result;
 			while( i < filesList.length )
 			{
-				gapi.client.drive.files.get(
-				{
-					'fileId': filesList[i].id,
-					fields: 'webContentLink'
-				}).then(function(response) 
+				callList[i].then(function(response)
 				{
 					webLink = JSON.parse(response.body);
 					webLinkList.push(webLink.webContentLink);
-					//console.log(filesList);
-				},function(reason)
+				}, function(reason)
 				{
 					console.log('Error: ' + reason.result.error.message);
 				});
 				i++;
 			}
-			console.log(webLinkList);
-	  }
-	  
+		})
+		console.log(webLinkList)
+	}
+	  	
+		
+		//Old, unfinished, or unused functions
+		//listed below:
+		
+		//Unused
+		function sleep(ms) 
+		{
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+
+		async function demo() 
+		{
+			console.log('Taking a break...');
+			await sleep(1000);
+			console.log('Two second later');
+		}
+
+	  //Not fully functional
 	  function getPhotosFolderId ()
 	  {
 		  	var folderName = "name= 'Photos'";
@@ -360,8 +362,61 @@
 				console.log('Error: ' + reason.result.error.message);
 			});
 			return photosID;
-
 	  }
+	  
+	  //Old Version of function before batching was implemented
+	  function getWebLinksOld( filesList, webLinkList, i )
+	  {
+			//Gets web content links for all the photos in the folder
+			while( i < filesList.length )
+			{
+				currentID = filesList[i].id;
+				gapi.client.drive.files.get(
+				{
+					'fileId': currentID,
+					fields: 'webContentLink'
+				}).then( function(response) 
+				{
+					webLink = JSON.parse(response.body);
+					webLinkList.push(webLink.webContentLink);
+				}, function(reason)
+				{
+					console.log('Error: ' + reason.result.error.message);
+				});
+				i++;
+			}
+			console.log(webLinkList)
+	  }
+	  
+	  
+	  
+		//Placeholder for the one second delay that will occur when too many API calls
+		//are made in a second. (defined as 10 per sec by Google)		
+		//Not used
+		async function webLinkBackoff(filesID, webLinkList) 
+		{
+			console.log(filesID);
+			var delay = 1000;
+			console.log('timeout');
+			setTimeout(function() 
+			{  
+				console.log('Try again');
+				gapi.client.drive.files.get(
+				{
+					'fileId': filesID,
+					fields: 'webContentLink'
+				}).then(function(response) 
+				{
+					webLink = JSON.parse(response.body);
+					webLinkList.push(webLink.webContentLink);
+				},function(reason)
+				{
+					console.log('Error: ' + reason.result.error.message);
+				});
+			}, delay);
+			console.log(webLinkList);
+		}
+		
 	  
     </script>
     <script async defer src="https://apis.google.com/js/api.js"
