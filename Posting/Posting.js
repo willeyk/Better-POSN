@@ -1,3 +1,4 @@
+var saveFile = '{"firstname":"Nisha","lastname":"Holmes","birthday":"05/01/1992","email":"abc@gmail.com","phone":"555-555-555"}';
 
 $(document).ready(function(){
 	
@@ -7,7 +8,11 @@ $(document).ready(function(){
 	var savedPosts;
 	var counter;
 	var user_posts = new Object();
-	var saveToFile = '{"name":"wholmes","picture":"./Personal Profile Template_files/user.jpg","textposts":[{"datetime":"4/7 19:11","content":"hey "},{"datetime":"4/7 19:11","content":"what "},{"datetime":"4/7 19:11","content":"whose "},{"datetime":"4/7 19:12","content":"when"}]}';
+	var saveToFile = '{"name":"wholmes","picture":"./Personal Profile Template_files/user.jpg","textposts":[{"datetime":"4/7 19:11","content":"Having fun at Disneyland"},{"datetime":"4/7 19:11","content":" The most important thing in the world is family and love."},{"datetime":"4/7 19:12","content":"Try to be a rainbow in someones cloud."}]}';
+	
+	
+
+	
 	
 	
 	//hard coded in for now
@@ -20,7 +25,7 @@ $(document).ready(function(){
 	$("#friend-count").html(0);
 
 	//loop handles repopulating the posts 
-	for(var i = 0;i < 4;i++)
+	for(var i = 0;i < 3;i++)
 	{
 		obj = JSON.parse(saveToFile);
 		create = createPost(obj,i,$("#card-post"),user_posts);
@@ -44,6 +49,7 @@ $(document).ready(function(){
 
 	$("#postbtn").click(function(){
 		
+		
 		counter = counter + 1;
 		
 		$("#post-count").html(counter);
@@ -52,7 +58,10 @@ $(document).ready(function(){
 						 	
 		savedPosts = setPost($("#card-post"),user_posts);
 		savedPosts.appendTo(".innerdiv").show();
+		
 	});
+	
+
 		
 		
 		
@@ -60,7 +69,60 @@ $(document).ready(function(){
 			
 		jsonString= JSON.stringify(user_posts);
 		download(jsonString, 'json.txt', 'text/plain');  
+		
+		
+
 	});
+	/*---------------------------------------------------
+					Handles settings 
+	
+	-----------------------------------------------------*/
+	
+	obj = JSON.parse(saveFile);
+	
+	
+	$("#add_listing_info").find(".firstname").html(obj.firstname);
+	$("#add_listing_info").find(".lastname").html(obj.lastname);
+	$("#add_listing_info").find(".birthday").html(obj.birthday);
+	$("#add_listing_info").find(".email").html(obj.email);
+	$("#add_listing_info").find(".phone").html(obj.phone);
+	
+	$('#fname').hide(); //Initially form will be hidden.
+	$('#lname').hide();
+	$('#bname').hide();
+	$('#ename').hide();
+	$('#pname').hide();
+
+		$('#fedit').click(function() {
+			$('#fname').show();
+			
+		});
+		$('#ledit').click(function() {
+			$('#lname').show();
+		});
+		$('#bedit').click(function() {
+			$('#bname').show();
+		});
+		$('#eedit').click(function() {
+			$('#ename').show();
+		});
+		$('#pedit').click(function() {
+			$('#pname').show();
+		});
+		$('#submit').click(function() {
+			
+			
+			update($("#add_listing_info"));
+		});
+
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 });
@@ -128,4 +190,53 @@ function createPost(obj,i,templateCardPost,user_posts)
 	user_posts.textposts.push(old_post);
 	
 	return templateCardPost.clone();
+}
+
+/*-----------------------------------------
+                 Settings functions 
+
+-----------------------------------------*/
+ function update()
+{
+	var update_firstname = $('#first')[0];
+	
+	var update_lastname = $('#last')[0];
+	
+	var update_birthday = $('#birth')[0];
+	
+	var update_email = $('#em')[0];
+	;
+	var update_phone = $('#ph')[0];
+	
+	if($('#first')[0].value != '')
+	{
+		
+		$("#add_listing_info").find(".firstname").html(update_firstname.value);
+		
+	}
+	
+	if($('#last')[0].value != '')
+	{
+		$("#add_listing_info").find(".lastname").html(update_lastname.value);
+	}
+	
+	if($('#birth')[0].value != '')
+	{
+		$("#add_listing_info").find(".birthday").html(update_birthday.value);
+	}
+	if($('#em')[0].value != '')
+	{
+		$("#add_listing_info").find(".email").html(update_email.value);
+	}
+	if($('#ph')[0].value != '')
+	{
+		$("#add_listing_info").find(".phone").html(update_phone.value);
+	}
+	
+	$('#fname').hide(); //Initially form will be hidden.
+	$('#lname').hide();
+	$('#bname').hide();
+	$('#ename').hide();
+	$('#pname').hide();
+	
 }
