@@ -12,7 +12,8 @@
 <p id="demo"></p>
 
     <script type="text/javascript">
-      function handleClientLoad() {
+      function handleClientLoad() 
+	  {
         // Loads required libraries for functionality
         gapi.load('client:auth2', initClient);
       }
@@ -47,7 +48,7 @@
 				//If POSN is setup then get photo links
 				if( isPOSNSetup() == true)
 				{
-					getPhotoLinks();
+					createWallJSON();
 				}
 			}
       }
@@ -93,6 +94,7 @@
 	 function setupPOSN()
 	 {
 		makeApplicationFolders();
+		createWallJSON();
 	 }
 	 
 
@@ -188,8 +190,9 @@
 		});
 	}    
 	
+	
 	//Can upload a text file to Google Drive root
-	function uploadFile() 
+	function uploadFileFromButton() 
 	{
 		//Read in file to be uploaded from upload button
 		var uploadFile = document.getElementById("myFile").files[0];
@@ -246,6 +249,46 @@
 			}
 		}
 	 }
+	 
+	 function createWallJSON()
+	{
+			var directoryID = "1wL1foqmQ4w32oBOmIuso0WEGZJtRll5g"
+			var directory = [directoryID];
+			var name = 'myWallJSON';
+			var mimeType = 'application/json';
+			var fileContent = '';
+			var auth_token = gapi.client.getToken().access_token;
+			const boundary = '-------314159265358979323846';
+			const delimiter = "\r\n--" + boundary + "\r\n";
+			const close_delim = "\r\n--" + boundary + "--";
+			var metadata = 
+			{ 
+				"name" : name,
+				"mimeType": mimeType,
+				"parents" : directory
+			};  
+			var multipartRequestBody =
+			delimiter +  'Content-Type: application/json\r\n\r\n' +
+			JSON.stringify(metadata) +
+			delimiter +
+			'Content-Type: application/json' + '\n' +
+			'Content-Transfer-Encoding: base64\r\n\r\n' +
+			fileContent +
+			close_delim;
+
+			gapi.client.request(
+			{ 
+				'path': '/upload/drive/v3/files/',
+				'method': 'POST',
+				'params': {'uploadType': 'multipart'},
+				'headers': { 'Content-Type': 'multipart/form-data; boundary="' + boundary + '"', 'Authorization': 'Bearer ' + auth_token, },
+				'body': multipartRequestBody 
+			}).execute(function(file) { 
+				console.log("Wrote to file " + file.name + " id: " + file.id); 
+			}, function(error){
+					console.log(error);
+			});  
+	}
 	  
 	  //gives a list of web links for images in the Photos folder
 	  function getPhotoLinks()
@@ -268,6 +311,7 @@
 			}, function(reason) 
 			{
 				console.log('Error: ' + reason.result.error.message);
+				apiBackoff(getPhotoLinks());
 			}));
 			
 		listPromise.then(function(value)
@@ -283,9 +327,33 @@
 		});
 	  }
 	 
-	  
+	  	//Placeholder for the one second delay that will occur when too many API calls
+		//are made in a second. (defined as 10 per sec by Google)		
+		//Not used
+		async function apiBackoff(apiFunction, filesList, webLinkList) 
+		{
+			var delay = 1000;
+			console.log('timeout');
+			if(filesList)
+			{
+				console.log('weblink, weblink failed');
+				setTimeout(function() 
+				{  
+					apiFunction(filesList, webLinkList);
+				}, delay);
+			}
+			else
+			{
+				setTimeout(function() 
+				{  
+					console.log('Not weblink, regular call');
+					apiFunction();
+				}, delay);
+			}
+		}
+		
 	//Successfully implemented batching of requests to allow for 10+
-	//Needs some error checking
+	//Needs some error checking, 
 	function getWebLinks( filesList, webLinkList )
 	{
 		//Gets web content links for all the photos in the folder
@@ -293,6 +361,8 @@
 		var callList = [];
 		var httpBatch = gapi.client.newBatch()
 		var webLink;
+		
+		//Adds all requests for webContentLinks in a batch
 		while( i < filesList.length )
 		{
 			currentID = filesList[i].id;
@@ -303,26 +373,35 @@
 			}));
 			httpBatch.add(callList[i])
 			i++;
-		}
-		console.log(httpBatch);
+		}		
+		//Sends batch to Google
 		httpBatch.then(function(onFulfilled)
 		{
 			i = 0;
 			myResult = onFulfilled.result;
-			while( i < filesList.length )
+			parseRes = JSON.stringify(onFulfilled.result);
+			fail = parseRes.search('403');
+			if(fail == -1)
 			{
-				callList[i].then(function(response)
+				while( i < filesList.length )
 				{
-					webLink = JSON.parse(response.body);
-					webLinkList.push(webLink.webContentLink);
-				}, function(reason)
-				{
-					console.log('Error: ' + reason.result.error.message);
-				});
-				i++;
+					callList[i].then(function(response)
+					{
+						webLink = JSON.parse(response.body);
+						webLinkList.push(webLink.webContentLink);
+					}, function(reason)
+					{
+						console.log('Error: ' + reason.result.error.message);
+					});
+					i++;
+				}
+			}
+			else
+			{
+				console.log(filesList);
+				apiBackoff( getWebLinks, filesList, webLinkList)
 			}
 		})
-		console.log(webLinkList)
 	}
 	  	
 		
@@ -345,7 +424,7 @@
 	  //Not fully functional
 	  function getPhotosFolderId ()
 	  {
-		  	var folderName = "name= 'Photos'";
+		  	var folderName = "name= 'myWallJSON'";
 			var isTrashed = "trashed = false"
 			var query = folderName + 'and' + isTrashed;
 			var photosID;
@@ -388,34 +467,7 @@
 			console.log(webLinkList)
 	  }
 	  
-	  
-	  
-		//Placeholder for the one second delay that will occur when too many API calls
-		//are made in a second. (defined as 10 per sec by Google)		
-		//Not used
-		async function webLinkBackoff(filesID, webLinkList) 
-		{
-			console.log(filesID);
-			var delay = 1000;
-			console.log('timeout');
-			setTimeout(function() 
-			{  
-				console.log('Try again');
-				gapi.client.drive.files.get(
-				{
-					'fileId': filesID,
-					fields: 'webContentLink'
-				}).then(function(response) 
-				{
-					webLink = JSON.parse(response.body);
-					webLinkList.push(webLink.webContentLink);
-				},function(reason)
-				{
-					console.log('Error: ' + reason.result.error.message);
-				});
-			}, delay);
-			console.log(webLinkList);
-		}
+	 
 		
 	  
     </script>
