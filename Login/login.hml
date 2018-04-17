@@ -9,7 +9,7 @@ meRCb9wlKVWAz8uB03roqGiO---->
 
 <!---work on google sign in button, home link, sign in link, sign out link, database ---> 
 
-
+<!DOCTYPE html>  
 <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
 <link rel="stylesheet" href="login.css">
 
