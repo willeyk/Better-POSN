@@ -1,101 +1,70 @@
-<!---960036477119-0mrmi7l6tp8n71oe48uugfm6310haqjr.apps.googleusercontent.com
-
-get rid of create account and login to POSN, only use Google Drive 
-transition to wanishas page 
-domain to host on - cse people 
-access token 
-
-meRCb9wlKVWAz8uB03roqGiO----> 
-
-<!---work on google sign in button, home link, sign in link, sign out link, database ---> 
+<!DOCTYPE html>  
 
 
-<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
-<link rel="stylesheet" href="login.css">
+<html lang="en">
 
-<!--<script src = 'https://code.jquery.com/jquery-3.2.1.min.js'></script> ---> 
+	<head>
 
+		<body>
+
+
+			<ul>
+				<li><a href = "http://personalonlinesocialnetwork.com "class="active" href="#posn">About POSN</a></li>
+				<li><a href = "file://localhost/Users/kristianwilley/Desktop/login.html#" class="active" href="#home">Home</a></li>
+				<li><a href="#" onclick="signOut();">Sign out</a></li>
+
+
+			</ul>
+
+
+		<link href='https://fonts.googleapis.com/css?family=Mako' rel='stylesheet'>
+		<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+		<meta name="google-signin-scope" content="profile email">
+		<meta name="google-signin-client_id" content="1048767164744-cqi2l396ecujb8jegk3831tp48ecgec1.apps.googleusercontent.com">
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+
+		<center><h1>Personal Online Social Network</h1></center>
+		<div class="imgcontainer">
+		<center><img src="ic_launcher.png" alt="Avatar" class="avatar"></center>
+		</div>
+
+
+	<br>				
+		<form class= "loginPage">
+		<div class="register">
+		<div class="boxed">
+		<input type = "text" placeholder="name" name="usersname"/><br>
+		<input type = "text" placeholder="password" name ="psword"/><br>
+		<input type = "text" placeholder="email address" name="email"/>
+		<center><input type = "button" onlick = "check(this.form)" value = "Create Account" /></center>
+		<p class="message"> Already Registered?<a href = "#"> Login</a></p></div></div>
+
+		<div class = "login">
+		<div class= "boxed">
+		<!--<center><input type="text" placeholder ="username" name="userid"/></center><br>
+		<center><input type="password" placeholder ="password" name ="psword"/> </center><br>
+		<input type="button" onclick="check(this.form)" value="Login"/> --->
+
+		<!--<center><input type="button" id="loginGoogle" value="Google Sign-In"/> --> 
+
+		<!--<input type="reset" value="Forgot Password?" a href = "#"/>--> 
+		<center><div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" ></div></center>
+		<!--<li><input type = "button" value = "Enter POSN"><a href = "http://localhost:8000/Login/Posting.html"></a></li>--> 
+		<a href="http://localhost:8000/Posting.html"><input type="button" value="Enter POSN" /></a>
+		<!---<p class="message"> Not Registered? <a href = "#" onclick = "CollapseForm()"> Create Account </a></p></div></div></form> --> 
+
+
+	</body> 
+		
+	<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+	<link rel="stylesheet" href="login.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="jquery-3.3.1.min.js"></script> <!-- This is like the iostream of javascript if I had to equate it -->
 	<script type="text/javascript" src="jquery-ui.js"></script> <!-- Helps with animations -->
 	<script type="text/javascript" src="jquery.form.js"></script> <!-- Helps with animations -->
-<script src="login.js"></script>
-<html>
-	
+	<script src="login.js"></script>
 
-
-	<head>
-
-	<body>
-<!--<div id="SITE_BACKGROUND" class="siteBackground" style="position: absolute; top: 0px; height: 1578px; width: 980px;"><div id="SITE_BACKGROUND_previous_noPrev" class="siteBackgroundprevious" style="width: 100%; height: 100%;"><div id="SITE_BACKGROUNDpreviousImage" class="siteBackgroundpreviousImage"></div><div id="SITE_BACKGROUNDpreviousVideo" class="siteBackgroundpreviousVideo"></div><div id="SITE_BACKGROUND_previousOverlay_noPrev" class="siteBackgroundpreviousOverlay"></div></div><div id="SITE_BACKGROUND_current_th4j0_desktop_bg" data-position="fixed" class="siteBackgroundcurrent" style="top: 0px; background-color: rgb(255, 255, 255); position: fixed; width: 100%; height: 100%;"><div id="SITE_BACKGROUND_currentImage_th4j0_desktop_bg" data-type="bgimage" data-height="100%" class="siteBackgroundcurrentImage" style="position: absolute; top: 0px; width: 100%; opacity: 1; background-size: cover; background-position: center center; background-repeat: no-repeat; height: 100%; background-image: url(&quot;https://static.wixstatic.com/media/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.jpg/v1/fill/w_1920,h_1080,al_c,q_85/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.webp&quot;);" data-image-css="{&quot;backgroundSize&quot;:&quot;cover&quot;,&quot;backgroundPosition&quot;:&quot;center center&quot;,&quot;backgroundRepeat&quot;:&quot;no-repeat&quot;,&quot;height&quot;:&quot;100%&quot;}"></div><div data-quality="1080p" data-player-type="html5" class="siteBackgroundcurrentVideo bgVideo" id="SITE_BACKGROUNDcurrentVideo" style="width: 100%;"><video role="presentation" preload="auto" playsinline="" id="SITE_BACKGROUNDcurrentVideovideo" class="bgVideovideo" style="opacity: 1; position: absolute; min-width: 1044px; min-height: 587px; left: -128px; top: 0px;" width="1044" height="587" src="https://video.wixstatic.com/video/11062b_40811fcc9cac4a5bbfb0d93aaa94d70d/1080p/mp4/file.mp4"></video><div data-style="display:none" class="bgVideoposter" id="SITE_BACKGROUNDcurrentVideoposter" style="position: relative; width: 788px; height: 587px; display: none;"><img id="SITE_BACKGROUNDcurrentVideoposterimage" alt="" data-type="image" src="https://static.wixstatic.com/media/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.jpg/v1/fill/w_788,h_587,al_c,q_85,usm_0.66_1.00_0.01/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.webp" style="width: 788px; height: 587px; object-fit: cover;"></div></div><div id="SITE_BACKGROUND_currentOverlay_th4j0_desktop_bg" class="siteBackgroundcurrentOverlay" style="position: absolute; top: 0px; width: 100%; height: 100%;"></div></div></div> ---> 
-
-<ul>
-	<li><a href = "http://personalonlinesocialnetwork.com "class="active" href="#posn">About POSN</a></li>
-	<li><a href = "file://localhost/Users/kristianwilley/Desktop/login.html#" class="active" href="#home">Home</a></li>
-    <li><a href="#" onclick="signOut();">Sign out</a></li>
-
-
-</ul>
-
-</body>
-
-<body>
-	<link href='https://fonts.googleapis.com/css?family=Mako' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
-	</head>
-<html lang="en">
-  <head>
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="1048767164744-cqi2l396ecujb8jegk3831tp48ecgec1.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-  </head>
-  <body>
-
-  </body>
 </html>
-
-<body>
-<center><h1>Personal Online Social Network</h1></center>
-  <div class="imgcontainer">
-    <center><img src="ic_launcher.png" alt="Avatar" class="avatar"></center>
-  </div>
-  
-				
-<br>				
-<form class= "loginPage">
-<div class="register">
-<div class="boxed">
-	<input type = "text" placeholder="name" name="usersname"/><br>
-	<input type = "text" placeholder="password" name ="psword"/><br>
-	<input type = "text" placeholder="email address" name="email"/>
-	<center><input type = "button" onlick = "check(this.form)" value = "Create Account" /></center>
-    <p class="message"> Already Registered?<a href = "#"> Login</a></p></div></div>
-
-<br> 
-	
-	<div class = "login">
-	<div class= "boxed">
-	<!--<center><input type="text" placeholder ="username" name="userid"/></center><br>
-	<center><input type="password" placeholder ="password" name ="psword"/> </center><br>
-	<input type="button" onclick="check(this.form)" value="Login"/> --->
-
-	<!--<center><input type="button" id="loginGoogle" value="Google Sign-In"/> --> 
-
-	<!--<input type="reset" value="Forgot Password?" a href = "#"/>--> 
-	<center><div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" ></div></center>
-	<!--<li><input type = "button" value = "Enter POSN"><a href = "http://localhost:8000/Login/Posting.html"></a></li>--> 
-    <a href="http://localhost:8000/Login/Posting.html"><input type="button" value="Enter POSN" /></a>
-	<!---<p class="message"> Not Registered? <a href = "#" onclick = "CollapseForm()"> Create Account </a></p></div></div></form> --> 
-				
-
-
-<script>
-	$('.message a').click(function(){
-	$('.register').animate({height: "toggle", opacity:"toggle"}, "slow"); 
-	}); 			
-</script>			  
-</body> 
-		
-
-		</html>
 
