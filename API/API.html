@@ -48,7 +48,8 @@
 				//If POSN is setup then get photo links
 				if( isPOSNSetup() == true)
 				{
-					createWallJSON();
+					//Put here whatever you want to test
+					//updateWallFile();
 				}
 			}
       }
@@ -94,7 +95,6 @@
 	 function setupPOSN()
 	 {
 		makeApplicationFolders();
-		createWallJSON();
 	 }
 	 
 
@@ -116,6 +116,7 @@
 		{
 			console.log(response.result);
 			makeSubFolders(response.result.id, subFolderNames);
+			createWallJSON(response.result.id);
 			
         }, function(reason) 
 		{
@@ -126,9 +127,13 @@
 	//Makes each individual subfolder as specificed
 	function makeSubFolders( directoryID, subFolderNames )
 	{
-		numOfSubFolders = 5;
-		directory = [directoryID]
-		mimeType = 'application/vnd.google-apps.folder'
+		var i = 0;
+		var mimeType = 'application/vnd.google-apps.folder';
+		var callList = [];
+		var httpBatch = gapi.client.newBatch();
+		var numOfSubFolders = 5;
+		var directory = [directoryID];
+
 		for( i = 0; i < numOfSubFolders; i++ )
 		{
 			bodyMetadata = 
@@ -138,20 +143,41 @@
 				'parents' : directory
 			}
 			
-			gapi.client.drive.files.create(
+			callList.push(gapi.client.drive.files.create(
 			{    
 				resource : bodyMetadata
-			}).then(function(response) 
-			{
-				console.log(response.result);
-				
-			}, function(reason) 
-			{
-				console.log('Error: ' + reason.result.error.message);
-			});
+			}));
+			httpBatch.add(callList[i])
 		}
+		console.log(httpBatch);
+		httpBatch.then(function(onFulfilled)
+		{
+			i = 0;
+			myResult = onFulfilled.result;
+			parseRes = JSON.stringify(onFulfilled.result);
+			fail = parseRes.search('403');
+			if(fail == -1)
+			{
+				for( i = 0; i < numOfSubFolders; i++ )
+				{
+					callList[i].then(function(response)
+					{
+						console.log(response.result);
+
+					}, function(reason)
+					{
+						console.log('Error: ' + reason.result.error.message);
+					});
+				}
+			}
+			else
+			{
+				console.log(filesList);
+				apiBackoff( makeSubFolders, directoryID, subFolderNames)
+			}
+		})
 	}
-	
+		
 	//Shows information about a file's permissions
 	function showPermissions( fileID )
 	{
@@ -189,7 +215,6 @@
 			console.log('Error: ' + reason.result.error.message);
 		});
 	}    
-	
 	
 	//Can upload a text file to Google Drive root
 	function uploadFileFromButton() 
@@ -250,51 +275,93 @@
 		}
 	 }
 	 
-	 function createWallJSON()
+	function createWallJSON( directoryID )
 	{
-			var directoryID = "1wL1foqmQ4w32oBOmIuso0WEGZJtRll5g"
-			var directory = [directoryID];
-			var name = 'myWallJSON';
-			var mimeType = 'application/json';
-			var fileContent = '';
-			var auth_token = gapi.client.getToken().access_token;
-			const boundary = '-------314159265358979323846';
-			const delimiter = "\r\n--" + boundary + "\r\n";
-			const close_delim = "\r\n--" + boundary + "--";
-			var metadata = 
-			{ 
-				"name" : name,
-				"mimeType": mimeType,
-				"parents" : directory
-			};  
-			var multipartRequestBody =
-			delimiter +  'Content-Type: application/json\r\n\r\n' +
-			JSON.stringify(metadata) +
-			delimiter +
-			'Content-Type: application/json' + '\n' +
-			'Content-Transfer-Encoding: base64\r\n\r\n' +
-			fileContent +
-			close_delim;
+		var directory = [directoryID];
+		var name = 'myWallJSON';
+		var mimeType = 'application/json';
+		var fileContent = '';
+		var auth_token = gapi.client.getToken().access_token;
+		const boundary = '-------314159265358979323846';
+		const delimiter = "\r\n--" + boundary + "\r\n";
+		const close_delim = "\r\n--" + boundary + "--";
+		var metadata = 
+		{ 
+			"name" : name,
+			"mimeType": mimeType,
+			"parents" : directory
+		};  
+		var multipartRequestBody =
+		delimiter +  'Content-Type: application/json\r\n\r\n' +
+		JSON.stringify(metadata) +
+		delimiter +
+		'Content-Type: application/json' + '\n' +
+		'Content-Transfer-Encoding: base64\r\n\r\n' +
+		fileContent +
+		close_delim;
 
-			gapi.client.request(
-			{ 
-				'path': '/upload/drive/v3/files/',
-				'method': 'POST',
-				'params': {'uploadType': 'multipart'},
-				'headers': { 'Content-Type': 'multipart/form-data; boundary="' + boundary + '"', 'Authorization': 'Bearer ' + auth_token, },
-				'body': multipartRequestBody 
-			}).execute(function(file) { 
-				console.log("Wrote to file " + file.name + " id: " + file.id); 
-			}, function(error){
-					console.log(error);
-			});  
+		gapi.client.request(
+		{ 
+			'path': '/upload/drive/v3/files/',
+			'method': 'POST',
+			'params': {'uploadType': 'multipart'},
+			'headers': { 'Content-Type': 'multipart/form-data; boundary="' + boundary + '"', 'Authorization': 'Bearer ' + auth_token, },
+			'body': multipartRequestBody 
+		}).execute(function(file) { 
+			console.log("Wrote to file " + file.name + " id: " + file.id); 
+		}, function(error){
+				console.log(error);
+		});  
 	}
 	  
+	function updateWallFile()
+	{
+		var fileName = "name= " + "'myWallJSON'";
+		var isTrashed = "trashed = false"
+		var queryList = fileName + 'and' + isTrashed;
+		var fileID;
+		
+		//First find Wall file
+		gapi.client.drive.files.list(
+		{    
+			 'q' : queryList
+		}).then(function(response) 
+		{
+			console.log(response.result);
+			fileID = response.result.files[0].id;
+			
+			//Get contents of Wall file
+			gapi.client.drive.files.get({
+				'fileId' : fileID,
+				alt : 'media'
+			}).then(function(response)
+			{
+				//At this point response contains the body of
+				//The current file for user's wall/posts
+				//response.body is the file contents
+				console.log(response);
+				//Step 1: Create new one with new post in it
+				//Step 2: Delete old one				
+				//Step 3: Post updated one
+				
+				
+			}, function(reason)
+			{
+				console.log('Error: ' + reason.result.error.message);
+			});
+		}, function(reason) 
+		{
+			console.log('Error: ' + reason.result.error.message);
+		});
+	}
 	  //gives a list of web links for images in the Photos folder
 	  function getPhotoLinks()
 	  {
 		var order = 'folder'
+		
+		//Line below is hard coded
 		var photoDirectory = "'1VsFK73KutpZziLFYIihvXlhPIHpH8zbd' in parents"
+		
 		var isTrashed = "trashed = false"
 		//Function returns a list of files in google drive
         var listPromise = Promise.resolve(gapi.client.drive.files.list(
@@ -330,16 +397,16 @@
 	  	//Placeholder for the one second delay that will occur when too many API calls
 		//are made in a second. (defined as 10 per sec by Google)		
 		//Not used
-		async function apiBackoff(apiFunction, filesList, webLinkList) 
+		async function apiBackoff(apiFunction, apiVar1, apiVar2) 
 		{
 			var delay = 1000;
 			console.log('timeout');
 			if(filesList)
 			{
-				console.log('weblink, weblink failed');
+				console.log('Requests from batch failed');
 				setTimeout(function() 
 				{  
-					apiFunction(filesList, webLinkList);
+					apiFunction(apiVar1, apiVar2);
 				}, delay);
 			}
 			else
@@ -353,7 +420,7 @@
 		}
 		
 	//Successfully implemented batching of requests to allow for 10+
-	//Needs some error checking, 
+	//gets a list of web content links
 	function getWebLinks( filesList, webLinkList )
 	{
 		//Gets web content links for all the photos in the folder
@@ -421,27 +488,28 @@
 			console.log('Two second later');
 		}
 
-	  //Not fully functional
-	  function getPhotosFolderId ()
-	  {
-		  	var folderName = "name= 'myWallJSON'";
-			var isTrashed = "trashed = false"
-			var query = folderName + 'and' + isTrashed;
-			var photosID;
-			gapi.client.drive.files.list(
-			{    
-				 'q' : query
-			}).then(function(response) 
-			{
-				console.log(response.result);
-				photosID = response.result.files[0].id;
-				console.log(photosID)
-			}, function(reason) 
-			{
-				console.log('Error: ' + reason.result.error.message);
-			});
-			return photosID;
-	  }
+	//Works but cannot return
+	function getFileId( fileName )
+	{
+		//Pass like "'Name'" to function
+		var fileName = "name= " + fileName;
+		console.log(fileName);
+		var isTrashed = "trashed = false"
+		var query = fileName + 'and' + isTrashed;
+		var fileID;
+		gapi.client.drive.files.list(
+		{    
+			 'q' : query
+		}).then(function(response) 
+		{
+			console.log(response.result);
+			fileID = response.result.files[0].id;
+			console.log(fileID)
+		}, function(reason) 
+		{
+			console.log('Error: ' + reason.result.error.message);
+		});
+	}
 	  
 	  //Old Version of function before batching was implemented
 	  function getWebLinksOld( filesList, webLinkList, i )
