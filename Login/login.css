@@ -1,199 +1,74 @@
-
-li a:hover {
-    background-color: #AD2AB2;
-}
-	
-.boxed{
-	background-color: #9932CC; 
-	width: 400px; 
-	border: 25px #9932CC;
-	padding: 25px; 
-	top: 50%;
-	left: 50%;
-	border-radius: 25px; 
-	margin-left: 400px; 
-	text-align: center; 
-}
-body {
-    background-image: url(1.jpg); 
-	background-size: 100%; 
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: transparent;
-}
-
-body b{
-	background-color: purple; 
-	height: 100vh; 
-	background-position: center; 
-    background-size: center; 
-
-}
-
-.form c{
-	position: relative; 
-	z-index: 1; 
-	background: #ffffff; 
-	max-width: 360px; 
-	margin: 0 auto 100px;
-	padding: 45px; 
-	text-align: center; 
-}
-/*.form input[type = name]{
-    width: 55%;
-    padding: 5px 5px;
-    margin: 8px 0;
-    box-sizing: context-box;
-    border: none;
-    background-color: #FFFFFF;
-	border-radius: 25px;
-    color: purple;
-}*/ 
+<!DOCTYPE html>  
 
 
-li {
-    float: left;
-	font-family: 'Advent Pro';font-size: 14px;
+<html lang="en">
 
-}
+	<head>
 
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-h1 {
-    font-family: 'Advent Pro';font-size: 50px;
-	color: white; 
-}
-
-h2 {
-    font-family: 'Mako';font-size: 12px;
-	color: white; 
-}
-
-p{
-    font-family: 'Mako';font-size: 14px;
-	color: white; 
-}
-
-.login{
-	position: absolute; 
-	top: calc (50%-75px); 
-	left: calc(50%-50px); 
-	height: 150px; 
-	width: 50px; 
-	padding: 10px; 
-}
-
- .register{
-    position: absolute; 
-	top: calc (50%-75px); 
-	left: calc(50%-50px); 
-	height: 150px; 
-	width: 50px; 
-	padding: 10px;
-}
-
-.register input[type=text] {
-    width: 75%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #FFFFFF;
-	border-radius: 25px;
-    color: purple;
-}
-.register input[type=button] {
-    width: 25%;
-    padding: 5px 5px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #FFFFFF;
-	border-radius: 25px;
-    color: purple;
-}
+		<body>
 
 
-.login input[type=text] {
-    width: 75%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #FFFFFF;
-	border-radius: 25px;
-    color: purple;
-}
-
-.login input[type=password] {
-    width: 75%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #FFFFFF;
-	border-radius: 25px;
-    color: purple;
-}
-.login input[type=button] {
-    width: 25%;
-    padding: 5px 5px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #FFFFFF;
-	border-radius: 25px;
-    color: purple;
-}
-.login input[type=button]:hover {
-	opacity: 0.5;
-}
-
-.login input[type=reset]:hover{
-	opacity: 0.5;
-}
-.login .message{
-	margin: 15px 0 0; 
-	color: palevioletred; 
-	font-size: 12px; 
-}
-
-.login .message a{
-	color: blue; 
-	text-decoration: none; 
-}
+			<ul>
+				<li><a href = "http://personalonlinesocialnetwork.com "class="active" href="#posn" target="_blank">About POSN</a></li>
+				<li><a href = "file://localhost/Users/kristianwilley/Desktop/login.html#" class="active" href="#home">Home</a></li>
+				<li><a href="#" onclick="signOut();">Sign out</a></li>
 
 
-register input[type=button]:hover{
-	opacity: 0.5;
-}
+			</ul>
 
-.register {
-	display: none; 
-}
-.login input[type=reset] {
-    width: 30%;
-    padding: 5px 5px;
-    margin: 8px 0;
-    box-sizing: context-box;
-    border: none;
-    background-color: #FFFFFF;
-	border-radius: 25px;
-    color: purple;
-}
 
-.login-help {
-  width: 100%;
-  text-align: center;
-  font-size: 12px;
-}
+			<link href='https://fonts.googleapis.com/css?family=Mako' rel='stylesheet'>
+			<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+			<meta name="google-signin-scope" content="profile email">
+			<meta name="google-signin-client_id" content="1048767164744-cqi2l396ecujb8jegk3831tp48ecgec1.apps.googleusercontent.com">
+			<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+
+			<center>
+				<h1>Personal Online Social Network</h1>
+			</center>
+		
+			<div class="imgcontainer">
+				<center><img src="ic_launcher.png" alt="Avatar" class="avatar"></center>
+			</div>
+
+
+	<br>				
+		<form class= "loginPage">
+		<div class="register">
+		<div class="boxed">
+		<input type = "text" placeholder="name" name="usersname"/><br>
+		<input type = "text" placeholder="password" name ="psword"/><br>
+		<input type = "text" placeholder="email address" name="email"/>
+		<center><input type = "button" onlick = "check(this.form)" value = "Create Account" /></center>
+		<p class="message"> Already Registered?<a href = "#"> Login</a></p></div></div>
+
+		<div class = "login">
+		<div class= "boxed">
+		<!--<center><input type="text" placeholder ="username" name="userid"/></center><br>
+		<center><input type="password" placeholder ="password" name ="psword"/> </center><br>
+		<input type="button" onclick="check(this.form)" value="Login"/> --->
+
+		<!--<center><input type="button" id="loginGoogle" value="Google Sign-In"/> --> 
+
+		<!--<input type="reset" value="Forgot Password?" a href = "#"/>--> 
+		<center><div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" ></div>
+		<!--<li><input type = "button" value = "Enter POSN"><a href = "http://localhost:8000/Login/Posting.html"></a></li>--> 
+		<a href="http://localhost:8000/Posting.html"><input type="button" value="Enter POSN" /></a></center>
+		<!---<p class="message"> Not Registered? <a href = "#" onclick = "CollapseForm()"> Create Account </a></p></div></div></form> --> 
+
+
+		
+		<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+		<link rel="stylesheet" href="login.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="jquery-3.3.1.min.js"></script> <!-- This is like the iostream of javascript if I had to equate it -->
+		<script type="text/javascript" src="jquery-ui.js"></script> <!-- Helps with animations -->
+		<script type="text/javascript" src="jquery.form.js"></script> <!-- Helps with animations -->
+		<script src="login.js"></script>
+
+	</body> 
+			
+</html>
+
