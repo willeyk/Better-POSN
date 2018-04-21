@@ -4,9 +4,11 @@
 <html>
 	<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>POSN</title>
+
+		<link rel="icon" href="./favicon.ico">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="./Personal Profile Template_files/bootstrap.min.css" type="text/css">
-		<link rel="stylesheet" href="./Personal Profile Template_files/style.css" type="text/css">
+		<link rel="stylesheet" href="./Posting.css" type="text/css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 
@@ -114,6 +116,17 @@
 								<a> Post</a>
 								<div>
 									<input id = "post" name = "post" type="text" autocomplete="off" class="form-control" placeholder="Share how you feel....."></input>			
+									
+									<div class="image-upload">
+										<label for="file-input">
+											<i class="fa fa-upload" style="font-size:25px;color:#ad2ab2"></i>
+										</label>
+										
+										<input id="file-input" type="file" name = "file" value = "Upload Image"/>
+										 <!-- <div class="upload-image-preview"></div>-->
+									</div>
+										
+				
 									<button id = 'postbtn' type="submit" class = "button1">Post</button>	
 								</div>
 							</form>
@@ -138,7 +151,8 @@
 								</div>
 								<div class="row">
 									<div class="col-sm-8 col-sm-offset-2 data-post">
-										<p><span class= "display" ></span></p>
+										<p><span class= "display" ></span>
+										<span class = "image" ></span></p>
 											   
 										<div class="reaction">
 											<img draggable="false" class="emoji" id = "emoji" alt="❤" src="./Personal Profile Template_files/2764.png" onclick="love()"> <span id = "love1" class= "love1"></span> </img>
@@ -230,7 +244,7 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-		<script src ="./Personal Profile Template_files/posting.js"></script>
+		<script src ="./posting.js"></script>
 		<script type="text/javascript" src="jquery-3.3.1.min.js"></script> <!-- This is like the iostream of javascript if I had to equate it -->
 		<script type="text/javascript" src="jquery-ui.js"></script> <!-- Helps with animations -->
 		<script type="text/javascript" src="jquery.form.js"></script> <!-- Helps with animations -->
