@@ -96,5 +96,6 @@ function signOut() {
       console.log('User signed out.');
     });
   }
-
-
+	$('.message a').click(function(){
+	$('.register').animate({height: "toggle", opacity:"toggle"}, "slow"); 
+	}); 
