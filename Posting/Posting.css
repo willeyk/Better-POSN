@@ -1,4 +1,9 @@
 
+.upload-image-preview {
+  width: 50px;
+  height: 50px;
+  border: 1px solid red;
+}
 /*---------------------------------------------------------------
 [Main Color]
 -----------------------------------------------------------------*/
@@ -272,7 +277,9 @@ header .badge {
     border-radius: 4px;
 	
 }
-
+.image-upload{
+		display: inline-block;
+}
 .button1 {
     background-color: #ad2ab2; 
     border: none;
@@ -282,7 +289,7 @@ header .badge {
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-	border-radius: .25rem;
+	border-radius: .30rem;
 	margin-left: 24px;
 
 }
@@ -298,6 +305,16 @@ header .badge {
     font-size: 12px;
 	border-radius: .25rem;
 	margin-left: 24px;
+}
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
 }
 
 /*----------------------------------------------------------------
