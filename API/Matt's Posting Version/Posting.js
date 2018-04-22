@@ -568,67 +568,86 @@ function createPost(obj,i,templateCardPost,user_posts)
 	
 	//Function meant to handle adding a new post to the Wall JSON in Google Drive
 	//Essentially in four steps:
-	//1. Find and download current Wall JSON
-	//2. Append new post to Wall JSON
-	//3. Delete current Wall JSON
+	//1. Find POSN_Directory
+	//2. Find and download current Wall JSON
+	//3. Append new post to Wall JSON
 	//4. Post updated Wall JSON
+	//5. Delete old Wall JSON
+
 	function AddPostToWall()
 	{
-		var fileName = "name= " + "'myWallJSON.txt'";
+		//Variables for finding POSN_Directory
+		var dirName = "name= " + "'POSN_Directory'";
 		var isTrashed = "trashed = false"
-		var queryList = fileName + 'and' + isTrashed;
+		var dirQuery = dirName + 'and' + isTrashed;
+		var dirID;
 		
-		//POSN dir is hard coded
-		var mainDir = '1-AYsABzUeqi1JxexUng-vatA_DJssUXQ'
-		var fileID;
+		//Variables for finding JSON file
+		var jsonName = "name= " + "'myWallJSON.txt'";
+		var queryList = jsonName + 'and' + isTrashed;
+		var jsonID;
 		
-		//Step 1: Download JSON file
-		
-		//Find Wall JSON
+		//Step 1: Find POSN_Directory ID
 		gapi.client.drive.files.list(
 		{    
-			 'q' : queryList
+			 'q' : dirQuery
 		}).then(function(response) 
 		{
-			console.log(response.result);
-			fileID = response.result.files[0].id;
+			//ID of POSN_Directory
+			mainDir = response.result.files[0].id;
 			
-			//Get contents of Wall JSON
-			gapi.client.drive.files.get({
-				'fileId' : fileID,
-				alt : 'media'
-			}).then(function(response)
+			//Step 2: Get JSON file
+			//Find Wall JSON ID
+			gapi.client.drive.files.list(
+			{    
+				 'q' : queryList
+			}).then(function(response) 
 			{
-			
-								
-				//Step 2: Create new one with new post in it
-				//Response.body has is current Wall JSON content
-				//DO SOME APPENDING STUFF
-				//DO SOME APPENDING STUFF
-				//DO SOME APPENDING STUFF
+				console.log(response.result);
 				
+				//ID of Wall JSON
+				jsonID = response.result.files[0].id;
 				
-				//Step 3: Delete old Wall JSON	
-				gapi.client.drive.files.delete({
-					'fileId' : fileID
+				//Get contents of Wall JSON
+				gapi.client.drive.files.get({
+					'fileId' : jsonID,
+					alt : 'media'
 				}).then(function(response)
 				{
-					console.log(response);
-				}), function(reason)
+				
+									
+					//Step 3: Create new one with new post in it
+					//Response.body has is current Wall JSON content
+					//DO SOME APPENDING STUFF
+					//DO SOME APPENDING STUFF
+					//DO SOME APPENDING STUFF
+					
+					
+					//Step 4: Post updated Wall JSON
+					console.log(response.body);
+					
+					//Pass this function the updated Wall JSON with new post appended 
+					//instead of response.body.
+					
+					//MainDir is id of POSN main directory
+					updateWallJSON(mainDir, response.body);
+					
+					//Step 5: Delete old Wall JSON	
+					gapi.client.drive.files.delete({
+						'fileId' : jsonID
+					}).then(function(response)
+					{
+						console.log(response);
+					}), function(reason)
+					{
+						console.log(reason);
+					}
+					
+				}, function(reason)
 				{
-					console.log(reason);
-				}
-				
-				//Step 4: Post updated Wall JSON
-				console.log(response.body);
-				
-				//Pass this function the updated Wall JSON with new post appended 
-				//instead of response.body.
-				
-				//MainDir is id of POSN main directory, currently hard coded
-				updateWallJSON(mainDir, response.body);
-				
-			}, function(reason)
+					console.log('Error: ' + reason.result.error.message);
+				});
+			}, function(reason) 
 			{
 				console.log('Error: ' + reason.result.error.message);
 			});
@@ -636,6 +655,9 @@ function createPost(obj,i,templateCardPost,user_posts)
 		{
 			console.log('Error: ' + reason.result.error.message);
 		});
+		
+
+
 	}
 	  //gives a list of web links for images in the Photos folder
 	  function getPhotoLinks()
