@@ -75,7 +75,8 @@ $(document).ready(function(){
 
 	$("#download").click(function(){
 			
-		AddPostToWall();
+		jsonString= JSON.stringify(user_posts);
+		AddPostToWall(jsonString);
 
 	});
 	
@@ -574,7 +575,7 @@ function createPost(obj,i,templateCardPost,user_posts)
 	//4. Post updated Wall JSON
 	//5. Delete old Wall JSON
 
-	function AddPostToWall()
+	function AddPostToWall(user_posts)
 	{
 		//Variables for finding POSN_Directory
 		var dirName = "name= " + "'POSN_Directory'";
@@ -618,19 +619,16 @@ function createPost(obj,i,templateCardPost,user_posts)
 									
 					//Step 3: Create new one with new post in it
 					//Response.body has is current Wall JSON content
-					//DO SOME APPENDING STUFF
-					//DO SOME APPENDING STUFF
-					//DO SOME APPENDING STUFF
-					
+					updateJSON = response.body + user_posts;
 					
 					//Step 4: Post updated Wall JSON
-					console.log(response.body);
+					console.log(updateJSON);
 					
 					//Pass this function the updated Wall JSON with new post appended 
 					//instead of response.body.
 					
 					//MainDir is id of POSN main directory
-					updateWallJSON(mainDir, response.body);
+					updateWallJSON(mainDir, updateJSON);
 					
 					//Step 5: Delete old Wall JSON	
 					gapi.client.drive.files.delete({
@@ -655,9 +653,47 @@ function createPost(obj,i,templateCardPost,user_posts)
 		{
 			console.log('Error: ' + reason.result.error.message);
 		});
+	}
+	
+	function getCurrentWall()
+	{
+		//Variables for finding JSON file
+		var jsonName = "name= " + "'myWallJSON.txt'";
+		var isTrashed = "trashed = false"
+		var queryList = jsonName + 'and' + isTrashed;
+		var jsonID;
+		//Find Wall JSON ID
+		gapi.client.drive.files.list(
+		{    
+			'q' : queryList
+		}).then(function(response) 
+		{
+			console.log(response.result);
+				
+			//ID of Wall JSON
+			jsonID = response.result.files[0].id;
+				
+			//Get contents of Wall JSON
+			gapi.client.drive.files.get({
+				'fileId' : jsonID,
+				alt : 'media'
+			}).then(function(response)
+			{
+				console.log(response.body);
+				//Response.body has is current Wall JSON content
+				//DO WHATEVER NEED TO DO WITH FILE
+				//DO WHATEVER NEED TO DO WITH FILE
+				//DO WHATEVER NEED TO DO WITH FILE
+
+			}, function(reason)
+			{
+				console.log('Error: ' + reason.result.error.message);
+			});
+		}, function(reason) 
+		{
+			console.log('Error: ' + reason.result.error.message);
+		});
 		
-
-
 	}
 	  //gives a list of web links for images in the Photos folder
 	  function getPhotoLinks()
