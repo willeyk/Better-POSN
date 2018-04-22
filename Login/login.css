@@ -4,15 +4,15 @@ li a:hover {
 }
 	
 .boxed{
-	background-color: #9932CC; 
-	width: 400px; 
+	background-color: #9932CC;
 	border: 25px #9932CC;
 	padding: 25px; 
-	top: 50%;
-	left: 50%;
-	border-radius: 25px; 
-	margin-left: 400px; 
-	text-align: center; 
+    border-radius: 25px; 
+	width: 30%;
+	position: fixed;
+	left: 73%;
+	margin-left: -37.5%;
+
 }
 body {
     background-image: url(1.jpg); 
